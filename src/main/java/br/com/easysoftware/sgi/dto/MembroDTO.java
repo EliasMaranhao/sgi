@@ -1,12 +1,11 @@
 package br.com.easysoftware.sgi.dto;
-import java.time.LocalDate;
 import java.util.List;
 
 public record MembroDTO(String nome,
-                        LocalDate dataConversao,
-                        LocalDate dataBatismo,
-                        LocalDate dataNascimento,
-                        LocalDate recebidoEm,
+                        String dataConversao,
+                        String dataBatismo,
+                        String dataNascimento,
+                        String recebidoEm,
                         String igrejaOrigem,
                         String genero,
                         String igreja,

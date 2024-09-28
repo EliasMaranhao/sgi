@@ -16,5 +16,6 @@ public class Documento {
     @Column(name = "tipo_documento")
     private TipoDocumento tipoDocumento;
 
+    @Column(unique = true)
     private String valor;
 }

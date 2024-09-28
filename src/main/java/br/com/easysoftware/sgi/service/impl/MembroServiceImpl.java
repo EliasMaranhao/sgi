@@ -1,5 +1,6 @@
 package br.com.easysoftware.sgi.service.impl;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -46,11 +47,17 @@ public class MembroServiceImpl implements MembroService{
         List<CargoDTO> cargos = membro.getCargos().stream().map(cargoDTOMapper).collect(Collectors.toList());
         List<ParenteDTO> parentes = membro.getParentes().stream().map(parenteDTOMapper).collect(Collectors.toList());
 
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String dataConversao = membro.getDataConversao().format(format);
+        String dataBastismo = membro.getDataBatismo().format(format);
+        String dataRecebido = membro.getDataRecebido().format(format);
+        String dataNascimento = membro.getDataNascimento().format(format);
+
         return new MembroDTO(membro.getNome(), 
-                             membro.getDataConversao(), 
-                             membro.getDataBatismo(), 
-                             membro.getDataNascimento(),
-                             membro.getDataRecebido(),
+                             dataConversao, 
+                             dataBastismo, 
+                             dataNascimento,
+                             dataRecebido,
                              membro.getIgrejaOrigem(),
                              membro.getGenero().name(), 
                              membro.getIgreja().getNome(), 
