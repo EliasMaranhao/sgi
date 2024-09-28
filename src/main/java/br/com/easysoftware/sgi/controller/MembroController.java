@@ -3,6 +3,7 @@ package br.com.easysoftware.sgi.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.easysoftware.sgi.dto.MembroDTO;
 import br.com.easysoftware.sgi.entity.Membro;
 import br.com.easysoftware.sgi.service.MembroService;
-import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/sgi/membro")
@@ -24,7 +24,7 @@ public class MembroController {
     private MembroService membroService;
 
     @PostMapping
-    public ResponseEntity<Membro> salvar(@RequestBody Membro membro){
+    public ResponseEntity<Membro> salvar(@Validated @RequestBody Membro membro){
         Membro salvo = membroService.salvar(membro);
         return ResponseEntity.status(HttpStatus.CREATED).body(salvo);
     }
@@ -35,17 +35,10 @@ public class MembroController {
         return ResponseEntity.ok(membroDTO);
     }
 
-    // @PutMapping("/{id}")
-    // public ResponseEntity<Membro> atualizar(@PathVariable Long id, @Valid @RequestBody Membro membro){
-    //     System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>> CHEGOU AQUI");
-    //     Membro atualizado = membroService.atualizar(id, membro);
-    //     return ResponseEntity.ok(atualizado);
-    // }
-
     @PutMapping("/{id}")
-    public String atualizar(@PathVariable Long id, @RequestBody Membro membro){
+    public ResponseEntity<Membro> atualizar(@PathVariable Long id,@Validated @RequestBody Membro membro){
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>> CHEGOU AQUI: " + id);
         Membro atualizado = membroService.atualizar(id, membro);
-        return "OK";
+        return ResponseEntity.ok(atualizado);
     }
 }

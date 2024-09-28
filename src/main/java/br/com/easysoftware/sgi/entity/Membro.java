@@ -51,6 +51,23 @@ public class Membro {
     @Column(name = "igreja_origem")
     private String igrejaOrigem;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado_civil")
+    private EstadoCivil estadoCivil;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "situacao_membro")
+    private SituacaoMembro situacaoMembro;
+
+    @Column(name = "veio_outra_igreja")
+    private Boolean veioOutraIgreja;
+
+    @Column(name = "veio_outro_campo")
+    private Boolean veioOutroCampo;
+
+    @Column(name = "campo_origem")
+    private String campoOrigem;
+
     @NotNull
     @ManyToOne
     @JoinColumn(name = "igreja_id")
@@ -69,6 +86,10 @@ public class Membro {
     @NotNull
     @Enumerated(EnumType.STRING)
     private Genero genero;
+
+    @Embedded
+    @NotNull
+    private Endereco endereco;
 
     @OneToMany(mappedBy = "membro")
     List<Cargo> cargos;
