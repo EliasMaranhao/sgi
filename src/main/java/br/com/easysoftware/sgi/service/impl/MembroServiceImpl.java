@@ -1,6 +1,5 @@
 package br.com.easysoftware.sgi.service.impl;
 
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -9,14 +8,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.easysoftware.sgi.dto.CargoDTO;
-import br.com.easysoftware.sgi.dto.CargoDTOMapper;
-import br.com.easysoftware.sgi.dto.ContatoDTO;
-import br.com.easysoftware.sgi.dto.ContatoDTOMapper;
 import br.com.easysoftware.sgi.dto.MembroDTO;
-import br.com.easysoftware.sgi.dto.ParenteDTO;
-import br.com.easysoftware.sgi.dto.ParenteDTOMapper;
+import br.com.easysoftware.sgi.dto.MembroDTOMapper;
 import br.com.easysoftware.sgi.entity.Membro;
+import br.com.easysoftware.sgi.exception.MembroJaExisteException;
 import br.com.easysoftware.sgi.exception.MembroNaoEncontradoException;
 import br.com.easysoftware.sgi.repository.MembroRepository;
 import br.com.easysoftware.sgi.service.MembroService;
@@ -26,49 +21,25 @@ public class MembroServiceImpl implements MembroService{
 
     @Autowired
     private MembroRepository membroRepository;
+
     @Autowired
-    private ContatoDTOMapper contatoDTOMapper;
-    @Autowired
-    private CargoDTOMapper cargoDTOMapper;
-    @Autowired
-    private ParenteDTOMapper parenteDTOMapper;
+    private MembroDTOMapper membroDTOMapper;
 
     @Override
     public Membro salvar(Membro membro) {
+        Membro consulta = membroRepository.findByNome(membro.getNome());
+
+        if(consulta != null){
+            throw new MembroJaExisteException("Este nome já existe na base de dados.");
+        }
+
         Membro salvo = membroRepository.save(membro);
         return salvo;
     }
 
     @Override
     public MembroDTO buscarPorId(Long id) {
-        Membro membro =  buscar(id);
-
-        List<ContatoDTO> contatos = membro.getContatos().stream().map(contatoDTOMapper).collect(Collectors.toList());
-        List<CargoDTO> cargos = membro.getCargos().stream().map(cargoDTOMapper).collect(Collectors.toList());
-        List<ParenteDTO> parentes = membro.getParentes().stream().map(parenteDTOMapper).collect(Collectors.toList());
-
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String dataConversao = membro.getDataConversao().format(format);
-        String dataBastismo = membro.getDataBatismo().format(format);
-        String dataRecebido = membro.getDataRecebido().format(format);
-        String dataNascimento = membro.getDataNascimento().format(format);
-
-        return new MembroDTO(membro.getNome(), 
-                             dataConversao, 
-                             dataBastismo, 
-                             dataNascimento,
-                             dataRecebido,
-                             membro.getIgrejaOrigem(),
-                             membro.getGenero().name(), 
-                             membro.getIgreja().getNome(), 
-                             contatos, 
-                             cargos, 
-                             parentes);
-    }
-    
-    private Membro buscar(Long id){
-        //Optional<MembroDTO> optional = membroRepository.findById(id).map(membroDTOMapper);
-        Optional<Membro> optional = membroRepository.findById(id);
+        Optional<MembroDTO> optional = membroRepository.findById(id).map(membroDTOMapper);
 
         if(optional.isEmpty()){
             throw new MembroNaoEncontradoException("Membro não encontrado.");
@@ -90,8 +61,21 @@ public class MembroServiceImpl implements MembroService{
 
     @Override
     public Membro atualizar(Long id, Membro membro) {
-        Membro salvo = buscar(id);
+        Optional<Membro> optional = membroRepository.findById(id);
+        Membro salvo = null;
+
+        if(optional.isEmpty()){
+            throw new MembroNaoEncontradoException("Membro não encontrado.");
+        }
+
+        salvo = optional.get();
         BeanUtils.copyProperties(membro, salvo, "id");
         return membroRepository.save(salvo);
+    }
+
+    @Override
+    public List<MembroDTO> buscarMembros() {
+        List<MembroDTO> membros = membroRepository.findAll().stream().map(membroDTOMapper).collect(Collectors.toList());
+        return membros;
     }
 }

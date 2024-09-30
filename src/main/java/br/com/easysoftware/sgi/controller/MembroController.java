@@ -1,5 +1,7 @@
 package br.com.easysoftware.sgi.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,5 +42,10 @@ public class MembroController {
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>> CHEGOU AQUI: " + id);
         Membro atualizado = membroService.atualizar(id, membro);
         return ResponseEntity.ok(atualizado);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<MembroDTO>> buscarMembros(){
+        return ResponseEntity.ok(membroService.buscarMembros());
     }
 }

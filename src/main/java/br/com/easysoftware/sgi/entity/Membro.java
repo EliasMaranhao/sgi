@@ -51,10 +51,12 @@ public class Membro {
     @Column(name = "igreja_origem")
     private String igrejaOrigem;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "estado_civil")
     private EstadoCivil estadoCivil;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "situacao_membro")
     private SituacaoMembro situacaoMembro;
@@ -79,7 +81,6 @@ public class Membro {
     @OneToMany(mappedBy = "membro")
     private List<Parente> parentes;
 
-    @NotNull
     @Embedded
     private Documento documento;
 
@@ -88,7 +89,6 @@ public class Membro {
     private Genero genero;
 
     @Embedded
-    @NotNull
     private Endereco endereco;
 
     @OneToMany(mappedBy = "membro")
