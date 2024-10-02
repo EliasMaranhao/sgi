@@ -19,6 +19,9 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "membro")
 @Getter
@@ -70,14 +73,18 @@ public class Membro {
     @Column(name = "campo_origem")
     private String campoOrigem;
 
+    //@JsonBackReference
     @NotNull
     @ManyToOne
     @JoinColumn(name = "igreja_id")
     private Igreja igreja;
 
-    @OneToMany(mappedBy = "membro")
+    //@JsonManagedReference
+    @JsonIgnore
+    @OneToMany
     private List<Contato> contatos;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "membro")
     private List<Parente> parentes;
 
@@ -91,6 +98,7 @@ public class Membro {
     @Embedded
     private Endereco endereco;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "membro")
     List<Cargo> cargos;
 }

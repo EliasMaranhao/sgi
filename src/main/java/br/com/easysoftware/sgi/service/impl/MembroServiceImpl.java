@@ -2,14 +2,12 @@ package br.com.easysoftware.sgi.service.impl;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.easysoftware.sgi.dto.MembroDTO;
-import br.com.easysoftware.sgi.dto.MembroDTOMapper;
+import br.com.easysoftware.sgi.dto.mapper.MembroDTOMapper;
 import br.com.easysoftware.sgi.entity.Membro;
 import br.com.easysoftware.sgi.exception.MembroJaExisteException;
 import br.com.easysoftware.sgi.exception.MembroNaoEncontradoException;
@@ -25,6 +23,9 @@ public class MembroServiceImpl implements MembroService{
     @Autowired
     private MembroDTOMapper membroDTOMapper;
 
+    //@Autowired
+    //private MembroDTOMapper membroDTOMapper;
+
     @Override
     public Membro salvar(Membro membro) {
         Membro consulta = membroRepository.findByNome(membro.getNome());
@@ -39,6 +40,7 @@ public class MembroServiceImpl implements MembroService{
 
     @Override
     public MembroDTO buscarPorId(Long id) {
+        //Optional<Membro> optional = membroRepository.findById(id).map(membroDTOMapper);
         Optional<MembroDTO> optional = membroRepository.findById(id).map(membroDTOMapper);
 
         if(optional.isEmpty()){
@@ -74,8 +76,9 @@ public class MembroServiceImpl implements MembroService{
     }
 
     @Override
-    public List<MembroDTO> buscarMembros() {
-        List<MembroDTO> membros = membroRepository.findAll().stream().map(membroDTOMapper).collect(Collectors.toList());
+    public List<Membro> buscarMembros() {
+        //List<MembroDTO> membros = membroRepository.findAll().stream().map(membroDTOMapper).collect(Collectors.toList());
+        List<Membro> membros = membroRepository.findAll();
         return membros;
     }
 }

@@ -2,6 +2,8 @@ package br.com.easysoftware.sgi.entity;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -28,6 +30,7 @@ public class Cargo {
     @JoinColumn(name = "funcao_id")
     private Funcao funcao;
 
+    @JsonBackReference
     @MapsId("membroId")
     @ManyToOne(optional = false)
     @JoinColumn(name = "membro_id")

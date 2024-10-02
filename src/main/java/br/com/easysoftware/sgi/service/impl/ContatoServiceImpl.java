@@ -8,12 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.easysoftware.sgi.dto.ContatoDTO;
-import br.com.easysoftware.sgi.dto.ContatoDTOMapper;
+import br.com.easysoftware.sgi.dto.mapper.ContatoDTOMapper;
 import br.com.easysoftware.sgi.entity.Contato;
 import br.com.easysoftware.sgi.entity.Membro;
-import br.com.easysoftware.sgi.exception.MembroNaoEncontradoException;
+import br.com.easysoftware.sgi.exception.RecursoNaoExisteException;
 import br.com.easysoftware.sgi.repository.ContatoRepository;
-import br.com.easysoftware.sgi.repository.MembroRepository;
 import br.com.easysoftware.sgi.service.ContatoService;
 
 @Service
@@ -23,36 +22,35 @@ public class ContatoServiceImpl implements ContatoService{
     private ContatoRepository contatoRepository;
 
     @Autowired
-    private MembroRepository membroRepository;
-
-    @Autowired
     private ContatoDTOMapper contatoDTOMapper;
 
     @Override
-    public Contato salvar(Contato contato) {
-        Optional<Membro> optional = membroRepository.findById(contato.getMembro().getId());
-
-        if(optional.isEmpty()){
-            throw new MembroNaoEncontradoException("O recurso buscado não foi encontrado");
-        }
-
-        return contatoRepository.save(contato);
+    public List<ContatoDTO> salvar(Contato contato) { 
+        Contato salvo = contatoRepository.save(contato);
+        return buscarContatoPeloMembro(salvo.getMembro());
     }
 
     @Override
-    public List<ContatoDTO> buscarContatoPeloMembro(Long id) {
-        Optional<Membro> optional = membroRepository.findById(id);
-        Membro salvo = null;
+    public List<ContatoDTO> buscarContatoPeloMembro(Membro membro) {
+
+        List<Contato> contatos = contatoRepository.findByMembro(membro);
+        List<ContatoDTO> contatos_dto = null;
+
+        if(!contatos.isEmpty()){
+            contatos_dto = contatos.stream().map(contatoDTOMapper).collect(Collectors.toList());
+        }
+        return contatos_dto;
+    }
+
+    @Override
+    public void deletar(Long id) {
+        Optional<Contato> optional = contatoRepository.findById(id);
 
         if(optional.isEmpty()){
-            throw new MembroNaoEncontradoException("O recurso buscado não foi encontrado");
+            throw new RecursoNaoExisteException("O recurso buscado não foi encontrado");
         }
 
-        salvo = optional.get();
-
-        List<ContatoDTO> contatos = contatoRepository.findByMembro(salvo).stream().map(contatoDTOMapper).collect(Collectors.toList());
-
-        return contatos;
+        contatoRepository.delete(optional.get());
     }
     
 }

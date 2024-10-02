@@ -10,5 +10,5 @@ public interface MembroService {
     MembroDTO buscarPorId(Long id);
     Membro buscarPeloNome(String nome);
     Membro atualizar(Long id, Membro membro);
-    List<MembroDTO> buscarMembros();
+    List<Membro> buscarMembros();
 }

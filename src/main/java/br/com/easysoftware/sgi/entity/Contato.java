@@ -1,5 +1,7 @@
 package br.com.easysoftware.sgi.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -32,6 +34,7 @@ public class Contato {
     
     private String valor;
 
+    //@JsonBackReference
     @ManyToOne
     @JoinColumn(name = "membro_id")
     private Membro membro;

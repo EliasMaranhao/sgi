@@ -1,6 +1,8 @@
 package br.com.easysoftware.sgi.dto;
 
-public record ParenteDTO (String parentesco,
-                          String nome){
+import br.com.easysoftware.sgi.entity.TipoParentesco;
+
+public record ParenteDTO(TipoParentesco parentesco,
+                         String nome) {
     
 }

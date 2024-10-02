@@ -2,6 +2,7 @@ package br.com.easysoftware.sgi.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -36,16 +37,15 @@ public class Igreja {
     public Endereco endereco;
 
     @ManyToOne
-    @JoinColumn(name = "igreja_id")
-    @JsonIgnore
-    private Igreja igrejaPai;
-
-    @OneToMany(mappedBy = "igrejaPai")
-    private List<Igreja> igrejas;
+    @JoinColumn(name = "campo_id")
+    @JsonBackReference
+    private Campo campo;
 
     @Enumerated(EnumType.STRING)
     private Denominacao denominacao;
 
-    @OneToMany(mappedBy = "igreja")
+    //@JsonManagedReference
+    @JsonIgnore
+    @OneToMany
     private List<Membro> membros;
 }

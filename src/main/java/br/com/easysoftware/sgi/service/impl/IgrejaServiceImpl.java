@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.easysoftware.sgi.entity.Igreja;
+import br.com.easysoftware.sgi.exception.RecursoNaoExisteException;
 import br.com.easysoftware.sgi.repository.IgrejaRepository;
 import br.com.easysoftware.sgi.service.IgrejaService;
 
@@ -27,19 +28,17 @@ public class IgrejaServiceImpl implements IgrejaService{
     }
 
     @Override
-    public List<Igreja> buscarFiliais(Long id) {
-        Igreja igrejaPai = buscarPeloId(id);
-        return igrejaRepository.findByIgrejaPai(igrejaPai);
+    public Igreja buscarPeloId(Long id){
+        return buscar(id);
     }
     
-    private Igreja buscarPeloId(Long id){
+    private Igreja buscar(Long id){
         Optional<Igreja> optional = igrejaRepository.findById(id);
-        Igreja igreja = null;
 
-        if(optional.isPresent()){
-            igreja = optional.get();
+        if(optional.isEmpty()){
+            throw new RecursoNaoExisteException("O recurso buscado não foi localizado");
         }
 
-        return igreja;
+        return optional.get();
     }
 }

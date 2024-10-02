@@ -8,5 +8,5 @@ public interface IgrejaService {
     
     List<Igreja> buscar();
     Igreja salvar(Igreja igreja);
-    List<Igreja> buscarFiliais(Long id);
+    Igreja buscarPeloId(Long id);
 }

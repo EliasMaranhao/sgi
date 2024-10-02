@@ -1,6 +1,9 @@
 package br.com.easysoftware.sgi.dto;
 
-public record ContatoDTO(String tipo,
+import br.com.easysoftware.sgi.entity.TipoContato;
+
+public record ContatoDTO(Long id,
+                         TipoContato tipoContato,
                          String valor) {
     
 }

@@ -12,30 +12,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.easysoftware.sgi.entity.Campo;
 import br.com.easysoftware.sgi.entity.Igreja;
-import br.com.easysoftware.sgi.service.IgrejaService;
+import br.com.easysoftware.sgi.service.CampoService;
 
 @RestController
-@RequestMapping("/sgi/igreja")
-public class IgrejaController {
+@RequestMapping("sgi/campo")
+public class CampoController {
     
     @Autowired
-    private IgrejaService igrejaService;
-
-    @GetMapping
-    public ResponseEntity<List<Igreja>> buscar(){
-        List<Igreja> igrejas = igrejaService.buscar();
-        return ResponseEntity.ok(igrejas);
-    }
+    private CampoService campoService;
 
     @PostMapping
-    public ResponseEntity<Igreja> salvar(@RequestBody Igreja igreja){
-        return ResponseEntity.status(HttpStatus.CREATED).body(igrejaService.salvar(igreja));
+    public ResponseEntity<Campo> salvar(@RequestBody Campo campo){
+        Campo salvo = campoService.salvar(campo);
+        return ResponseEntity.status(HttpStatus.CREATED).body(salvo);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Igreja> buscarPeloId(@PathVariable Long id){
-        Igreja igreja = igrejaService.buscarPeloId(id);
-        return ResponseEntity.ok(igreja);
+    @GetMapping("/filiais/{id}")
+    public ResponseEntity<List<Igreja>> buscarFiliais(@PathVariable Long id){
+        return ResponseEntity.ok(campoService.buscarFiliais(id));
     }
 }

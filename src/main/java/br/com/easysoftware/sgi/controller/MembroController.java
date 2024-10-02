@@ -33,8 +33,8 @@ public class MembroController {
 
     @GetMapping("/{id}")
     public ResponseEntity<MembroDTO> buscarPorId(@PathVariable Long id){
-        MembroDTO membroDTO = membroService.buscarPorId(id);
-        return ResponseEntity.ok(membroDTO);
+        MembroDTO membro = membroService.buscarPorId(id);
+        return ResponseEntity.ok(membro);
     }
 
     @PutMapping("/{id}")
@@ -45,7 +45,7 @@ public class MembroController {
     }
 
     @GetMapping
-    public ResponseEntity<List<MembroDTO>> buscarMembros(){
+    public ResponseEntity<List<Membro>> buscarMembros(){
         return ResponseEntity.ok(membroService.buscarMembros());
     }
 }
