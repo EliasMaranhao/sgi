@@ -1,10 +1,10 @@
-package br.com.easysoftware.sgadb;
+package br.com.easysoftware.sgi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SgadbApplicationTests {
+class SgiApplicationTests {
 
 	@Test
 	void contextLoads() {
