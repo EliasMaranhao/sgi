@@ -5,16 +5,23 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.easysoftware.sgi.dto.IgrejaDTO;
+import br.com.easysoftware.sgi.dto.IgrejaDTOMapper;
 import br.com.easysoftware.sgi.entity.Igreja;
 import br.com.easysoftware.sgi.exception.RecursoNaoExisteException;
 import br.com.easysoftware.sgi.repository.IgrejaRepository;
 import br.com.easysoftware.sgi.service.IgrejaService;
+
+import java.util.stream.Collectors;
 
 @Service
 public class IgrejaServiceImpl implements IgrejaService{
 
     @Autowired
     private IgrejaRepository igrejaRepository;
+
+    @Autowired
+    private IgrejaDTOMapper igrejaDTOMapper;
 
     @Override
     public List<Igreja> buscar() {
@@ -40,5 +47,11 @@ public class IgrejaServiceImpl implements IgrejaService{
         }
 
         return optional.get();
+    }
+
+    @Override
+    public List<IgrejaDTO> buscarIgrejas() {
+        List<IgrejaDTO> igrejas = igrejaRepository.findAll().stream().map(igrejaDTOMapper).collect(Collectors.toList());
+        return igrejas;
     }
 }

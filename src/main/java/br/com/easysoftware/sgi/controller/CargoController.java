@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.easysoftware.sgi.entity.Cargo;
 import br.com.easysoftware.sgi.service.CargoService;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 @RestController
 @RequestMapping("/sgi/cargo")
@@ -24,4 +26,9 @@ public class CargoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(salvo);
     }
 
+    @GetMapping
+    public String getCargos() {
+        return new String();
+    }
+    
 }

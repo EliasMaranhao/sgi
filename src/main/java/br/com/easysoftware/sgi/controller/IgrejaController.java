@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.easysoftware.sgi.dto.IgrejaDTO;
 import br.com.easysoftware.sgi.entity.Igreja;
 import br.com.easysoftware.sgi.service.IgrejaService;
+
 
 @RestController
 @RequestMapping("/sgi/igreja")
@@ -22,11 +24,6 @@ public class IgrejaController {
     @Autowired
     private IgrejaService igrejaService;
 
-    @GetMapping
-    public ResponseEntity<List<Igreja>> buscar(){
-        List<Igreja> igrejas = igrejaService.buscar();
-        return ResponseEntity.ok(igrejas);
-    }
 
     @PostMapping
     public ResponseEntity<Igreja> salvar(@RequestBody Igreja igreja){
@@ -38,4 +35,11 @@ public class IgrejaController {
         Igreja igreja = igrejaService.buscarPeloId(id);
         return ResponseEntity.ok(igreja);
     }
+
+    @GetMapping
+    public ResponseEntity<List<IgrejaDTO>> buscarIgrejas() {
+        List<IgrejaDTO> igrejas = igrejaService.buscarIgrejas();
+        return ResponseEntity.ok(igrejas);
+    }
+    
 }

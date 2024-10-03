@@ -1,8 +1,11 @@
 package br.com.easysoftware.sgi.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.easysoftware.sgi.dto.CargoDTO;
 import br.com.easysoftware.sgi.entity.Cargo;
 import br.com.easysoftware.sgi.repository.CargosRepository;
 import br.com.easysoftware.sgi.service.CargoService;
@@ -16,6 +19,12 @@ public class CargoServiceImpl implements CargoService{
     @Override
     public Cargo salvar(Cargo cargo) {
         return cargosRepository.save(cargo);
+    }
+
+    @Override
+    public List<CargoDTO> getCargos() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getCargos'");
     }
     
 }
