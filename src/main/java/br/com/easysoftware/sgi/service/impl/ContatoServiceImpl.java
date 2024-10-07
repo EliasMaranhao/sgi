@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.BeanUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,5 +54,21 @@ public class ContatoServiceImpl implements ContatoService{
 
         contatoRepository.delete(optional.get());
     }
+
+    @Override
+    public Contato editar(Long id, Contato contato) {
+        Contato salvo = buscarContato(id);
+        BeanUtils.copyProperties(contato, salvo, "id");
+        return contatoRepository.save(salvo);
+    }
     
+    private Contato buscarContato(Long id){
+        Optional<Contato> optional = contatoRepository.findById(id);
+
+        if(optional.isEmpty()){
+            throw new RecursoNaoExisteException("O recurso buscado não foi encontrado");
+        }
+
+        return optional.get();
+    }
 }

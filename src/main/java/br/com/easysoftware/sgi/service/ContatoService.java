@@ -10,4 +10,5 @@ public interface ContatoService {
     List<ContatoDTO> salvar(Contato contato);
     List<ContatoDTO> buscarContatoPeloMembro(Membro membro);
     void deletar(Long id);
+    Contato editar(Long id, Contato contato);
 }

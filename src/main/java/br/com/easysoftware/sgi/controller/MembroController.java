@@ -39,7 +39,6 @@ public class MembroController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Membro> atualizar(@PathVariable Long id,@Validated @RequestBody Membro membro){
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>> CHEGOU AQUI: " + id);
         Membro atualizado = membroService.atualizar(id, membro);
         return ResponseEntity.ok(atualizado);
     }
