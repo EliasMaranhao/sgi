@@ -3,6 +3,8 @@ package br.com.easysoftware.sgi.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -16,7 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.easysoftware.sgi.dto.MembroDTO;
 import br.com.easysoftware.sgi.entity.Membro;
+import br.com.easysoftware.sgi.repository.filter.MembroFilter;
 import br.com.easysoftware.sgi.service.MembroService;
+
 
 @RestController
 @RequestMapping("/sgi/membro")
@@ -47,4 +51,11 @@ public class MembroController {
     public ResponseEntity<List<Membro>> buscarMembros(){
         return ResponseEntity.ok(membroService.buscarMembros());
     }
+
+    @GetMapping("/pesquisa")
+    public Page<Membro> pesquisarMembros(MembroFilter membroFilter, Pageable pageable) {
+        Page<Membro> membros = membroService.filtrar(membroFilter, pageable);
+        return membros;
+    }
+    
 }

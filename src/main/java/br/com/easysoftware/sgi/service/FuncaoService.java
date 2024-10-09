@@ -6,4 +6,5 @@ import br.com.easysoftware.sgi.entity.Funcao;
 
 public interface FuncaoService {
     List<Funcao> getFuncoes();
+    Funcao buscarPorId(Long id);
 }

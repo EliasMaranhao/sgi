@@ -11,9 +11,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.easysoftware.sgi.dto.CargoDTO;
 import br.com.easysoftware.sgi.entity.Cargo;
+import br.com.easysoftware.sgi.entity.CargoFuncaoId;
 import br.com.easysoftware.sgi.entity.Membro;
 import br.com.easysoftware.sgi.service.CargoService;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+
+
 
 
 @RestController
@@ -40,4 +47,22 @@ public class CargoController {
         return ResponseEntity.ok(cargos);
     }
     
+    @PutMapping("/edit/{membroId}/{funcaoId}")
+    public ResponseEntity<Cargo> editar(@PathVariable Long membroId, @PathVariable Long funcaoId, @RequestBody Cargo cargo) {
+        Cargo salvo = cargoService.editarCargo(membroId, funcaoId, cargo);
+        return ResponseEntity.ok(salvo);
+    }
+
+    @GetMapping("/{membroId}/{funcaoId}")
+    public ResponseEntity<Cargo> buscarCargoPeloCodigo(@PathVariable Long membroId, @PathVariable Long funcaoId) {
+        CargoFuncaoId id = new CargoFuncaoId(membroId, funcaoId);
+        Cargo cargo = cargoService.buscarPorCodigo(id);
+        return ResponseEntity.ok(cargo);
+    }
+    
+    @DeleteMapping("/delete/{membroId}/{funcaoId}")
+    public ResponseEntity<Void> deletarCargo(@PathVariable Long membroId, @PathVariable Long funcaoId){
+        cargoService.deletarCargo(membroId, funcaoId);
+        return ResponseEntity.noContent().build();
+    }
 }

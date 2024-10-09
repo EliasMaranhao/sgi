@@ -12,7 +12,8 @@ public class CargoDTOMapper implements Function<Cargo, CargoDTO>{
 
     @Override
     public CargoDTO apply(Cargo cargo) {
-        return new CargoDTO(cargo.getFuncao(), 
+        return new CargoDTO(cargo.getId(),
+                            cargo.getFuncao(), 
                             cargo.getDataPosse(), 
                             cargo.getDataDestituicao());
     }

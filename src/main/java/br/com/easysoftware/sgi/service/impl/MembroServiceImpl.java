@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.easysoftware.sgi.dto.MembroDTO;
@@ -11,7 +13,9 @@ import br.com.easysoftware.sgi.dto.mapper.MembroDTOMapper;
 import br.com.easysoftware.sgi.entity.Membro;
 import br.com.easysoftware.sgi.exception.MembroJaExisteException;
 import br.com.easysoftware.sgi.exception.MembroNaoEncontradoException;
+import br.com.easysoftware.sgi.exception.RecursoNaoExisteException;
 import br.com.easysoftware.sgi.repository.MembroRepository;
+import br.com.easysoftware.sgi.repository.filter.MembroFilter;
 import br.com.easysoftware.sgi.service.MembroService;
 
 @Service
@@ -22,9 +26,6 @@ public class MembroServiceImpl implements MembroService{
 
     @Autowired
     private MembroDTOMapper membroDTOMapper;
-
-    //@Autowired
-    //private MembroDTOMapper membroDTOMapper;
 
     @Override
     public Membro salvar(Membro membro) {
@@ -79,6 +80,29 @@ public class MembroServiceImpl implements MembroService{
     public List<Membro> buscarMembros() {
         //List<MembroDTO> membros = membroRepository.findAll().stream().map(membroDTOMapper).collect(Collectors.toList());
         List<Membro> membros = membroRepository.findAll();
+        return membros;
+    }
+
+    @Override
+    public Membro buscarMembroPorId(Long id) {
+        Membro membro = buscar(id);
+        return membro;
+    }
+
+    private Membro buscar(Long id){
+        Optional<Membro> optional = membroRepository.findById(id);
+
+        if(optional.isEmpty()){
+            throw new RecursoNaoExisteException("O recurso buscado não foi localizado");
+        }
+
+        return optional.get();
+    }
+
+    @Override
+    public Page<Membro> filtrar(MembroFilter membroFilter, Pageable pageable) {
+        Page<Membro> membros = membroRepository.filtrar(membroFilter, pageable);
+        //List<MembroDTO> membrosDTO = membros.stream().map(membroDTOMapper).collect(Collectors.toList());
         return membros;
     }
 }
