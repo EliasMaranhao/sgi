@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.easysoftware.sgi.entity.Campo;
 import br.com.easysoftware.sgi.entity.Igreja;
-import br.com.easysoftware.sgi.exception.CampoNaoExisteException;
+import br.com.easysoftware.sgi.exception.RecursoNaoExisteException;
 import br.com.easysoftware.sgi.repository.CampoRepository;
 import br.com.easysoftware.sgi.service.CampoService;
 
@@ -34,7 +34,7 @@ public class CampoServiceImpl implements CampoService{
         Optional<Campo> optional = campoRepository.findById(id);
 
         if(optional.isEmpty()){
-            throw new CampoNaoExisteException("O recurso buscaodo não existe");
+            throw new RecursoNaoExisteException("O recurso buscaodo não existe");
         }
 
         return optional.get();

@@ -11,8 +11,7 @@ import org.springframework.stereotype.Service;
 import br.com.easysoftware.sgi.dto.MembroDTO;
 import br.com.easysoftware.sgi.dto.mapper.MembroDTOMapper;
 import br.com.easysoftware.sgi.entity.Membro;
-import br.com.easysoftware.sgi.exception.MembroJaExisteException;
-import br.com.easysoftware.sgi.exception.MembroNaoEncontradoException;
+import br.com.easysoftware.sgi.exception.RecursoJaCadastradoException;
 import br.com.easysoftware.sgi.exception.RecursoNaoExisteException;
 import br.com.easysoftware.sgi.repository.MembroRepository;
 import br.com.easysoftware.sgi.repository.filter.MembroFilter;
@@ -32,7 +31,7 @@ public class MembroServiceImpl implements MembroService{
         Membro consulta = membroRepository.findByNome(membro.getNome());
 
         if(consulta != null){
-            throw new MembroJaExisteException("Este nome já existe na base de dados.");
+            throw new RecursoJaCadastradoException("Este nome já existe na base de dados.");
         }
 
         Membro salvo = membroRepository.save(membro);
@@ -45,7 +44,7 @@ public class MembroServiceImpl implements MembroService{
         Optional<MembroDTO> optional = membroRepository.findById(id).map(membroDTOMapper);
 
         if(optional.isEmpty()){
-            throw new MembroNaoEncontradoException("Membro não encontrado.");
+            throw new RecursoNaoExisteException("Membro não encontrado.");
         }
 
         return optional.get();
@@ -56,7 +55,7 @@ public class MembroServiceImpl implements MembroService{
         Membro membro = membroRepository.findByNome(nome);
 
         if(membro == null){
-            throw new MembroNaoEncontradoException("Membro não encontrado.");
+            throw new RecursoNaoExisteException("Membro não encontrado.");
         }
 
        return membro;
@@ -68,7 +67,7 @@ public class MembroServiceImpl implements MembroService{
         Membro salvo = null;
 
         if(optional.isEmpty()){
-            throw new MembroNaoEncontradoException("Membro não encontrado.");
+            throw new RecursoNaoExisteException("Membro não encontrado.");
         }
 
         salvo = optional.get();

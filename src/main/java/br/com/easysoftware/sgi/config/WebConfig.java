@@ -25,6 +25,7 @@ public class WebConfig implements WebMvcConfigurer{
             .exposedHeaders("*");
     }
 	
+    @SuppressWarnings("null")
 	@Override
     public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
 //        Remove the default MappingJackson2HttpMessageConverter

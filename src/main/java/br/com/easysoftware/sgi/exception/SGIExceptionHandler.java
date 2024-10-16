@@ -11,11 +11,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.Arrays;
 import java.util.List;
 
-@RestControllerAdvice
+//@RestControllerAdvice
 public class SGIExceptionHandler extends ResponseEntityExceptionHandler{
     
-    @ExceptionHandler({ MembroNaoEncontradoException.class } )
-    public ResponseEntity<Object> handleMembroNaoEncontradoExceptio(MembroNaoEncontradoException ex, WebRequest request){
+    @ExceptionHandler({ RecursoNaoExisteException.class } )
+    public ResponseEntity<Object> handleMembroNaoEncontradoExceptio(RecursoNaoExisteException ex, WebRequest request){
         String mensagemUsuario = "Recurso buscado nao foi localizado";
 		String mensagemDesenvolvedor = ex.toString();
 

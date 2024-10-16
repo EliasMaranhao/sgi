@@ -1,10 +1,10 @@
 package br.com.easysoftware.sgi.exception;
 
-public class MembroNaoEncontradoException extends RuntimeException{
+public class RecursoJaCadastradoException extends RuntimeException{
     
     private String mensagem;
 
-    public MembroNaoEncontradoException(String mensagem){
+    public RecursoJaCadastradoException(String mensagem){
         this.mensagem = mensagem;
     }
 
