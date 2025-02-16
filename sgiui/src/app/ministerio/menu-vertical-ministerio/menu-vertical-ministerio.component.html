@@ -1,0 +1,19 @@
+<div class="row longBar" style="background-color: rgb(66, 79, 90);">
+  <div class="bg-dark col-2 border px-4 pt-4">
+    <span class="fs-4 text-white">Ministério</span>
+    <hr class="text-white">
+
+    <ul class="nav nav-pills flex-column mb-auto mt-4">
+      <li class="nav-item">
+        <a [routerLink]="[{ outlets: {conteudo: ['novo']}}]" class="nav-link" aria-current="page">Novo</a>
+      </li>
+      <li>
+        <a [routerLink]="[{ outlets: {conteudo: ['pesquisar']}}]" class="nav-link">Pesquisa</a>
+      </li>
+    </ul>
+  </div>
+  
+  <div class="col-10 border">
+    <router-outlet name="conteudo"></router-outlet>
+  </div>
+</div>

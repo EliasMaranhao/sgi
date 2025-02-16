@@ -1,0 +1,9 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.longBar {
+    height: 100vh; /* Note a medida */
+    background-color: rgb(66, 79, 90);
+}
