@@ -6,6 +6,7 @@ import { CadastrarMinisterioComponent } from './ministerio/cadastrar-ministerio/
 import { PesquisarMinisterioComponent } from './ministerio/pesquisar-ministerio/pesquisar-ministerio.component';
 import { EstruturaComponent } from './core/estrutura/estrutura.component';
 import { MenuVerticalMinisterioComponent } from './ministerio/menu-vertical-ministerio/menu-vertical-ministerio.component';
+import { LoginComponent } from './usuario/login/login.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,11 @@ const routes: Routes = [
   {
     path: 'membro', 
     component: MenuVerticalMembroComponent
+  },
+
+  {
+    path: 'login',
+    component: LoginComponent
   }
 ];
 
