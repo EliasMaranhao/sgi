@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { MenuVerticalMembroComponent } from './membro/menu-vertical-membro/menu-vertical-membro.component';
@@ -7,8 +7,15 @@ import { PesquisarMinisterioComponent } from './ministerio/pesquisar-ministerio/
 import { EstruturaComponent } from './core/estrutura/estrutura.component';
 import { MenuVerticalMinisterioComponent } from './ministerio/menu-vertical-ministerio/menu-vertical-ministerio.component';
 import { LoginComponent } from './usuario/login/login.component';
+import { CadastrarMembroComponent } from './membro/cadastrar-membro/cadastrar-membro.component';
+import { PesquisarMembroComponent } from './membro/pesquisar-membro/pesquisar-membro.component';
 
 const routes: Routes = [
+  {
+    path: '',
+    component: LoginComponent
+  },
+
   {
     path: 'ministerio', 
     component: MenuVerticalMinisterioComponent,
@@ -29,7 +36,20 @@ const routes: Routes = [
 
   {
     path: 'membro', 
-    component: MenuVerticalMembroComponent
+    component: MenuVerticalMembroComponent,
+    children: [
+      {
+        path: 'novo',
+        component: CadastrarMembroComponent,
+        outlet: 'conteudo'
+      },
+
+      {
+        path: 'pesquisar',
+        component: PesquisarMembroComponent,
+        outlet: 'conteudo'
+      }
+    ]
   },
 
   {

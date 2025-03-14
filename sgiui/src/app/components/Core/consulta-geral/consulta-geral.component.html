@@ -1,0 +1,70 @@
+<div class="container mt-3">
+    <div class="row">
+        <div col-12 card>
+            <div class="card-header">
+                <h3>{{titulo}}</h3>
+            </div>
+            <hr>
+            <div class="card-body">
+                <table class="table table-border">
+                    <thead>
+                        <tr>
+                            @for (campo of camposTabela; track $index) {
+                                <th>{{campo}}</th>
+                            }
+                        </tr>
+
+                    </thead>
+        
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Assembléia de Deus em Bonsucesso</td>
+                            <td>04-09-2024</td>
+                            <td>Jaime Soares</td>
+                            <td>Paulo da Silva</td>
+                            <td>Rua frei Jaboatao 65</td>
+                            <td><button class="btn btn-primary btn-sm">
+                                <i class="bi bi-trash"></i>
+                            </button></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Igreja de Nova Vida</td>
+                            <td>04-09-2024</td>
+                            <td>Gustavo Kirten</td>
+                            <td>Novac Djkovic</td>
+                            <td>Rua frei Jaboatao 65</td>
+                            <td><button class="btn btn-primary btn-sm">
+                                <i class="bi bi-trash"></i>
+                            </button></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Igreja Universal do Reino de Deus</td>
+                            <td>04-09-2024</td>
+                            <td>Bispo Macedo</td>
+                            <td>Bispo Paulo da Agua Sagrada</td>
+                            <td>Rua frei Jaboatao 65</td>
+                            <td><button class="btn btn-primary btn-sm">
+                                <i class="bi bi-trash"></i>
+                            </button></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Igreja Deus é Amor</td>
+                            <td>10-03-2024</td>
+                            <td>Bispo Macedo</td>
+                            <td>Bispo Paulo da Agua Sagrada</td>
+                            <td>Rua frei Jaboatao 65</td>
+                            <td><button class="btn btn-primary btn-sm">
+                                <i class="bi bi-trash"></i>
+                            </button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

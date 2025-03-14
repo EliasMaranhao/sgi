@@ -1,5 +1,6 @@
 package br.com.easysoftware.sgiapi.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -49,4 +50,7 @@ public class Ministerio {
 
     @Column(name = "vice_presidente", nullable = false)
     private String vicePresidente;
+
+    @Column(name = "data_inauguracao", nullable = false, columnDefinition = "datetime")
+    private LocalDate dataInauguracao;
 }

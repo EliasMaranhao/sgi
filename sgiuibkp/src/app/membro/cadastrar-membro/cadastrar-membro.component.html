@@ -1,0 +1,542 @@
+<div class="container mt-4">
+
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" 
+                    id="info-pessoal" 
+                    data-bs-toggle="tab" 
+                    data-bs-target="#info-pessoal-tab" 
+                    type="button" 
+                    role="tab" 
+                    aria-controls="home" 
+                    aria-selected="true">
+                                    Informações Pessoais
+            </button>
+        </li>
+
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" 
+                    id="info-endereco" 
+                    data-bs-toggle="tab" 
+                    data-bs-target="#info-endereco-tab" 
+                    type="button" 
+                    role="tab" 
+                    aria-controls="profile" 
+                    aria-selected="false">
+                                    Endereço
+            </button>
+        </li>
+
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" 
+                    id="info-ecle" 
+                    data-bs-toggle="tab" 
+                    data-bs-target="#info-ecle-tab" 
+                    type="button" 
+                    role="tab" 
+                    aria-controls="profile" 
+                    aria-selected="false">
+                                    Informações Eclesiásticas
+            </button>
+        </li>
+    </ul>
+
+    <form autocomplete="off" >
+        <div class="tab-content" id="myTabContent">
+       
+            <div class="tab-pane fade show active" id="info-pessoal-tab" role="tabpanel" aria-labelledby="info-pessoal">
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header text-white" style="background-color: #00AA9E;"><h5>Identificação</h5></div>
+                            <div class="card-body">
+                                <div class="row mb-2">
+                                    <div class="col-2">
+                                        <label for="codigo">Código</label>
+                                        <input type="text" class="form-control form-control-sm" id="codigo" formControlName="id" readonly/>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <label for="Nome">Nome</label>
+                                        <input type="text" class="form-control form-control-sm" id="Nome" formControlName ="nome"/>
+                                    </div>
+
+                                    <div class="col-2">
+                                        <label for="dataNascimento">Nascimento</label>
+                                        <input type="date" class="form-control form-control-sm" id="dataNascimento" formControlName = "dataNascimento" />
+                                    </div>
+
+                                    <div class="col-2">
+                                        <label for="estadoCivil">Estado Civil</label>
+                                        <select name="" class="form-select form-select-sm" id="estadoCivil" formControlName = "estadoCivil">
+                                            <option value="">Selecione um opção</option>
+                                            <!--
+                                            <option *ngFor="let estadoCivil of optionsEstadoCivil" [value]="estadoCivil">{{estadoCivil}}</option>
+                                            -->
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label for="genero">Gênero</label>
+                                        <select name="" class="form-select form-select-sm" id="genero" formControlName = "genero">
+                                            <option value="">Selecione uma opção</option>
+                                            <!--
+                                            <option *ngFor="let genero of optionsGenero" [value]="genero">{{genero}}</option>
+                                            -->
+                                        </select>
+                                    </div>
+
+                                    <div class="col-4" formGroupName = "documento">
+                                        <label for="tipoDocumento">Tipo documento</label>
+                                        <select name="" class="form-select form-select-sm" id="tipoDocumento" formControlName = "tipoDocumento">
+                                            <option value="">Selecione uma opção</option>
+                                            <!--
+                                            <option *ngFor="let tipoDocumento of optionsTipoDocumento" [value]="tipoDocumento">{{tipoDocumento}}</option>
+                                             -->
+                                        </select>
+                                    </div>
+
+                                    <div class="col-4" formGroupName = "documento">
+                                        <label for="valorDocumento">Valor documento</label>
+                                        <input type="text" class="form-control form-control-sm" id="valorDocumento" formControlName = "valor" />
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      
+            <div class="tab-pane fade" id="info-endereco-tab" role="tabpanel" aria-labelledby="info-endereco">
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="card" formGroupName = "endereco">
+                            <div class="card-header text-white" style="background-color: #00AA9E;"><h5>Endereço</h5></div>
+                            <div class="card-body">
+
+                                <div class="row mb-2">    
+                                    <div class="col-3">
+                                        <label for="rua">Rua</label>
+                                        <input type="text" class="form-control form-control-sm" id="rua" formControlName = "rua"/>
+                                    </div>
+
+                                    <div class="col-1">
+                                        <label for="numero">Número</label>
+                                        <input type="text" class="form-control form-control-sm" id="numero" formControlName = "numero"/>
+                                    </div>
+
+                                    <div class="col-2">
+                                        <label for="cep">Cep</label>
+                                        <input type="text" class="form-control form-control-sm" id="cep" formControlName = "cep"/>
+                                    </div>
+
+                                    <div class="col-3">
+                                        <label for="bairro">Bairro</label>
+                                        <input type="text" class="form-control form-control-sm" id="bairro" formControlName = "bairro"/>
+                                    </div>
+
+                                    <div class="col-3">
+                                        <label for="cidade">Cidade</label>
+                                        <input type="text" class="form-control form-control-sm" id="cidade" formControlName = "cidade"/>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-2">
+                                    <div class="col-6">
+                                        <div class="row mb-3">
+                                            <div class="col-12">
+                                                <label for="estado">Estado</label>
+                                                <select name="" class="form-select form-select-sm" id="estado" formControlName = "estado">
+                                                    <option value="Rio de Janeiro">RJ - Rio de Janeiro</option>
+                                                    <option value="Espírito Santo">ES - Espírito Santo</option>
+                                                    <option value="Minas Gerais">MG - Minas Gerais</option>
+                                                </select>
+                                            </div>
+                                        </div>
+    
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <label for="pais">País</label>
+                                                <input type="text" class="form-control form-control-sm" id="pais" formControlName = "pais"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <label for="complemento">Complemento</label>
+                                        <textarea class="form-control form-control-sm" placeholder="Leave a comment here" id="complemento" style="height: 100px" formControlName = "complemento"></textarea>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="info-ecle-tab" role="tabpanel" aria-labelledby="info-ecle">
+          
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header text-white" style="background-color: #00AA9E;"><h5>Informações gerais</h5></div>
+                            <div class="card-body">
+
+                                <div class="row mb-4">
+                                    <div class="col-2">
+                                        <label for="dtConversao">Data de conversão</label>
+                                        <input type="date" class="form-control form-control-sm" id="dtConversao" formControlName = "dataConversao"/>
+                                    </div>
+
+                                    <div class="col-2">
+                                        <label for="dtBatismo">Data de batismo</label>
+                                        <input type="date" class="form-control form-control-sm" id="dtBatismo" formControlName = "dataBatismo"/>
+                                    </div>
+
+                                    <div class="col-2">
+                                        <label for="recebidoEm">Recebido em</label>
+                                        <input type="date" class="form-control form-control-sm" id="recebidoEm" formControlName = "dataRecebido"/>
+                                    </div>
+
+                                    <div class="col-3" formGroupName = "igreja">
+                                        <label for="congregacao">Congregação</label>
+                                        <select name="" class="form-select form-select-sm" id="congregacao" formControlName = "id">
+                                            <option value="">Selecione uma opção</option>
+                                            <!--
+                                            <option *ngFor="let igreja of igrejas" [value]="igreja.id">{{igreja.nome}}</option>
+                                            -->
+                                        </select>
+                                    </div>
+
+                                    <div class="col-3">
+                                        <label for="situacao">Situação atual</label>
+                                        <select name="" class="form-select form-select-sm" id="situacao" formControlName = "situacaoMembro">
+                                            <option value="">Selecione uma opção</option>
+                                             <!--
+                                            <option *ngFor="let s of optionsSituacaoMembro" [value]="s">{{s}}</option>
+                                            -->
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-4">
+                                    <div class="col-6">
+                                        <div class="row mb-2">
+                                            <span class="h6">Veio de outra denominação</span>
+                                            <div class="col-12">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="veioOutraIgreja" id="inlineRadio1" [value]="true" formControlName = "veioOutraIgreja">
+                                                    <label class="form-check-label" for="inlineRadio1">Sim</label>
+                                                  </div>
+                                                  <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="veioOutraIgreja" id="inlineRadio2" [value]="false" formControlName = "veioOutraIgreja">
+                                                    <label class="form-check-label" for="inlineRadio2">Não</label>
+                                                  </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <label for="denominacaoOrigem">Informe a denominação de origem</label>
+                                                <input type="text" class="form-control form-control-sm" id="denominacaoOrigem" formControlName = "igrejaOrigem" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="row mb-2">
+                                            <span class="h6">Veio de outro campo</span>
+                                            <div class="col-12">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="veioOutroCampo" id="inlineRadio1" [value]="true" formControlName = "veioOutroCampo">
+                                                    <label class="form-check-label" for="inlineRadio1">Sim</label>
+                                                  </div>
+                                                  <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="veioOutroCampo" id="inlineRadio2" [value]="false" formControlName = "veioOutroCampo">
+                                                    <label class="form-check-label" for="inlineRadio2">Não</label>
+                                                  </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <label for="denominacaoOrigem">Informe o campo de origem</label>
+                                                <input type="text" class="form-control form-control-sm" id="denominacaoOrigem" formControlName = "campoOrigem"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+           
+            </div>
+        </div>
+        
+        <div class="row mt-3">
+            <div class="col-12">
+                <button type="submit" value="Salvar" class="btn btn-primary btn-sm" >Salvar membro</button>
+                &nbsp;
+                <!-- modal contatos -->
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" >Contatos</button>
+                &nbsp;
+                <!-- modal funcoes -->
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#funcaoModal" >Funções</button>
+                &nbsp;
+                <!-- modal relacionamentos -->
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#RelacionamentoModal" >Relacionamentos</button>
+            </div>
+
+        </div>
+    </form>
+    
+
+
+    <!-- Modal contato-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header text-white" style="background-color: #00AA9E;">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nome do Membro</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form >
+                        <div class="row mb-3">
+                            <div class="col-3">
+                                <label for="tipoContato">Tipo</label>
+                                <select name="" class="form-select form-select-sm" id="tipoContato" formControlName = "tipoContato">
+                                    <option value="">Selecione o tipo de contato</option>
+                                    <!--
+                                    <option *ngFor="let tipoContato of optionsTipoContato" [value]="tipoContato">{{tipoContato}}</option>
+                                    -->
+                                </select>
+                            </div>
+
+                            <div class="col-9">
+                                <label for="valor">Valor</label>
+                                <input  type="text" class="form-control form-control-sm" id="valor" formControlName = "valor"/>
+                            </div>
+                        </div>
+                    
+                        <div class="row mb-3">
+                            <div class="col-3">
+                                <button type="submit" class="btn btn-primary btn-sm" id="btnAddContato" >Adicionar</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="card">
+                        <div class="card-header text-white" style="background-color: #00AA9E;"><h5>Contatos</h5></div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <table class="table table-striped table-sm table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Tipo</th>
+                                                <th>Contato</th>
+                                            </tr>
+                                        </thead>
+                                        <!--
+                                        <tbody>
+                                            <tr *ngFor="let contato of contatos">
+                                                <td>{{contato.tipoContato}}</td>
+                                                <td>{{contato.valor}}</td>
+                                                <td class="text-center">
+                                                    <a class="btn btn-primary btn-sm" (click)="editarContato(contato)">
+                                                        <i class="bi bi-pen"></i>
+                                                    </a>
+                                                    &nbsp;
+                                                    <button type="button" class="btn btn-danger btn-sm" (click)="deletarContato(contato.id)">
+                                                        <i class='bi bi-trash'></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        -->
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fechar</button>
+                </div>
+                -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal funções-->
+    <div class="modal fade" id="funcaoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header text-white" style="background-color: #00AA9E;">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nome do membro</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form >
+                        <div class="row mb-3">
+                            <div class="col-4">
+                                <label for="funcao">Tipo</label>
+                                <select name="" class="form-select form-select-sm" id="funcao" formControlName = "funcao">
+                                    <option value="">Selecione a função</option>
+                                    <!--
+                                    <option *ngFor="let funcao of funcoes" [value]="funcao.id">{{funcao.nome}}</option>
+                                    -->
+                                </select>
+                            </div>
+
+                            <div class="col-4">
+                                <label for="dataPosse">Posse</label>
+                                <input  type="date" class="form-control form-control-sm" id="dataPosse" formControlName = "dataPosse"/>
+                            </div>
+
+                            <div class="col-4">
+                                <label for="dataDestituicao">Saída</label>
+                                <input  type="date" class="form-control form-control-sm" id="dataDestituicao" formControlName = "dataDestituicao"/>
+                            </div>
+                        </div>
+                    
+                        <div class="row mb-3">
+                            <div class="col-2">
+                                <button type="submit" class="btn btn-primary btn-sm" id="btnAddContato" >Adicionar</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header text-white" style="background-color: #00AA9E;"><h5>Lista de funções</h5></div>
+            
+                                <div class="card-body">
+                                    <table class="table table-striped table-sm table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Cargo</th>
+                                                <th>Empossado em</th>
+                                                <th>Retirado em</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <!--
+                                        <tbody>
+                                            <tr *ngFor="let cargo of cargos">
+                                                <td>{{cargo.funcao.nome}}</td>
+                                                <td>{{cargo.dataPosse}}</td>
+                                                <td>{{cargo.dataDestituicao}}</td>
+                                                <td class="text-center">
+                                                    <button class="btn btn-primary btn-sm" (click)="editarCargo(cargo)">
+                                                        <i class="bi bi-pen"></i>
+                                                    </button>
+                                                    &nbsp;
+                                                    <button type="button" class="btn btn-danger btn-sm" (click)="deletarCargo(cargo)">
+                                                        <i class='bi bi-trash'></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        -->
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+                -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Relacionamentos-->
+    <div class="modal fade" id="RelacionamentoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header text-white" style="background-color: #00AA9E;">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nome do membro</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form >
+                        <div class="row mb-3">
+                            <div class="col-3">
+                                <label for="parentesco">Tipo</label>
+                                <select name="" class="form-select form-select-sm" id="parentesco" formControlName = "parentesco">
+                                    <option value="">Selecione o tipo de parentesco</option>
+                                    <!--
+                                    <option *ngFor="let tipoParentesco of optionsTipoParentesco" [value]="tipoParentesco">{{tipoParentesco}}</option>
+                                    -->
+                                </select>
+                            </div>
+
+                            <div class="col-9">
+                                <label for="valorParentesco">Valor</label>
+                                <input  type="text" class="form-control form-control-sm" id="valorParentesco" formControlName = "valorParentesco"/>
+                            </div>
+                        </div>
+                    
+                        <div class="row mb-3">
+                            <div class="col-2">
+                                <button type="submit" class="btn btn-primary btn-sm" id="btnAddParente" >Adicionar</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header text-white" style="background-color: #00AA9E;"><h5>Parentes</h5></div>
+            
+                                <div class="card-body">
+                                    <table class="table table-striped table-sm table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Parentesco</th>
+                                                <th>Nome</th>
+                                            </tr>
+                                        </thead>
+                                        
+                                        <!--
+                                        <tbody>
+                                            <tr *ngFor="let parente of parentes">
+                                                <td>{{parente.parentesco}}</td>
+                                                <td>{{parente.nome}}</td>
+                                                <td class="text-center">
+                                                    <a class="btn btn-primary btn-sm" href="#">
+                                                        <i class="bi bi-pen"></i>
+                                                    </a>
+                                                    &nbsp;
+                                                    <button type="button" class="btn btn-danger btn-sm">
+                                                        <i class='bi bi-trash'></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        -->
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+                -->
+            </div>
+        </div>
+    </div>
+</div>
