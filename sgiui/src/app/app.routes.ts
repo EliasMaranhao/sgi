@@ -11,7 +11,7 @@ export const routes: Routes = [
         children : [
             {
                 path: 'novo',
-                component: CadastroMembroComponent,
+                component: CadastroMinisterioComponent,
             }
         ]
     },

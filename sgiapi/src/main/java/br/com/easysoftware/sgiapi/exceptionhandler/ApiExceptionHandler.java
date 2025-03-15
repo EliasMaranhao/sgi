@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
@@ -212,5 +213,49 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
         .build();
 
         return handleExceptionInternal(ex, info, headers, status, request);
+    }
+
+    //trata urls nao existentes not working anymore
+    @Override
+    protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+        
+        String detail = String.format("O recurso %s, que você tentou acessar, é inexistente.", 
+                ex.getRequestURL());
+        
+        ExceptionInfo info = ExceptionInfo.builder()
+            .dataHora(LocalDateTime.now())
+            .detail(detail)
+            .status(status.value())
+            .title("Recurso nao encontrado")
+            .type("http://sgi.com.br/erro_de_negocio")
+            .build();
+        
+        return handleExceptionInternal(ex, info, headers, status, request);
+    }
+
+    //trata demais falhas não capturadas acima
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handleUncaught(Exception ex, WebRequest request) {
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;		
+    
+        String detail = "Ocorreu um erro interno inesperado no sistema. "
+                + "Tente novamente e se o problema persistir, entre em contato "
+                + "com o administrador do sistema.";
+
+        // Importante colocar o printStackTrace (pelo menos por enquanto, que não estamos
+        // fazendo logging) para mostrar a stacktrace no console
+        // Se não fizer isso, você não vai ver a stacktrace de exceptions que seriam importantes
+        // para você durante, especialmente na fase de desenvolvimento
+        ex.printStackTrace();
+        
+        ExceptionInfo info = ExceptionInfo.builder()
+            .dataHora(LocalDateTime.now())
+            .detail(detail)
+            .status(status.value())
+            .title("Erro de Sistema")
+            .type("http://sgi.com.br/erro_de_sistema")
+            .build();
+
+        return handleExceptionInternal(ex, info, new HttpHeaders(), status, request);
     }
 }

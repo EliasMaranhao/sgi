@@ -55,7 +55,6 @@ public class Membro {
     @Column(name = "data_conversao", nullable = false)
     private LocalDate dataConversao;
 
-    @JsonIgnore
     @Embedded
     @Column(nullable = false)
     private Endereco endereco;

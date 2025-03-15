@@ -16,7 +16,7 @@ import org.springframework.util.ReflectionUtils;
 import com.fasterxml.jackson.databind.DeserializationConfig;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import br.com.easysoftware.sgiapi.exceptionhandler.ApiExceptionHandler;
 import br.com.easysoftware.sgiapi.exceptionhandler.exceptions.EntidadeEmUsoException;
 import br.com.easysoftware.sgiapi.exceptionhandler.exceptions.MembroNaoEncontradoException;
 import br.com.easysoftware.sgiapi.model.Membro;
@@ -26,9 +26,19 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class MembroService {
+
+    private final ApiExceptionHandler apiExceptionHandler;
     
     @Autowired
     private MembroRepository membroRepository;
+
+    MembroService(ApiExceptionHandler apiExceptionHandler) {
+        this.apiExceptionHandler = apiExceptionHandler;
+    }
+
+    public List<Membro> listar(){
+        return membroRepository.findAll();
+    }
 
     public Membro buscarPorId(Long id){
         return buscar(id);

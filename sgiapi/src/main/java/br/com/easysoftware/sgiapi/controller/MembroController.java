@@ -33,6 +33,12 @@ public class MembroController {
     @Autowired
     private HttpServletRequest httpServletRequest;
 
+    @GetMapping
+    public ResponseEntity<List<Membro>> listar(){
+        List<Membro> membros = membroService.listar();
+        return ResponseEntity.ok(membros);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<MembroDTO> buscarPorId(@PathVariable Long id){
         Membro membro = membroService.buscarPorId(id);
@@ -51,7 +57,7 @@ public class MembroController {
         return ResponseEntity.ok(getParentes(parentes));
     }
 
-   @PatchMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<Membro> atualizarParcial(@PathVariable Long id, @RequestBody Map<String, Object> campos){
         Membro atualizado = membroService.atualizarParcial(id, campos, httpServletRequest);
         return ResponseEntity.ok().body(atualizado);

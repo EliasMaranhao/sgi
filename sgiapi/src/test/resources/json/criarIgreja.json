@@ -1,0 +1,8 @@
+{
+    "nome" : "Assembléia de Deus em Bonsucesso",
+    "dataInauguracao" : "1978-12-03",
+    "ministerio" : {
+        "id" : 1
+    },
+    "statusEnum" : "MATRIZ"
+}
