@@ -1,8 +1,6 @@
-package br.com.easysoftware.sgiapi.model;
+package br.com.easysoftware.sgiapi.entities;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -14,23 +12,27 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Ministerio {
+public class Contato {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Long id;
-
-    @Column(nullable = false)
-    private String nome;
     
+    private TipoContatoEnum tipo;
+    private String valor;
+
+    @JsonIgnore
+    @ManyToOne
+    private Membro membro;
+
     @JsonIgnore
     @CreationTimestamp
     @Column(name = "data_cadastro", nullable = false, columnDefinition = "datetime")
@@ -40,17 +42,4 @@ public class Ministerio {
     @UpdateTimestamp
     @Column(name = "data_atualizacao", nullable = false, columnDefinition = "datetime")
     private LocalDateTime dataAtualizacao;
-
-    @JsonIgnore
-    @OneToMany
-    private List<Igreja> igrejas;
-
-    @Column(nullable = false)
-    private String presidente;
-
-    @Column(name = "vice_presidente", nullable = false)
-    private String vicePresidente;
-
-    @Column(name = "data_inauguracao", nullable = false, columnDefinition = "datetime")
-    private LocalDate dataInauguracao;
 }

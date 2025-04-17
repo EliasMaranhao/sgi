@@ -1,6 +1,6 @@
-package br.com.easysoftware.sgiapi.dto;
+package br.com.easysoftware.sgiapi.dto.input;
 
-import br.com.easysoftware.sgiapi.model.ParentescoEnum;
+import br.com.easysoftware.sgiapi.entities.ParentescoEnum;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Builder
-public class ParenteDTO {
+public class ParenteInput {
     
     private ParentescoEnum parentescoEnum;
     private String nome;

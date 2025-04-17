@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.easysoftware.sgiapi.model.Funcao;
+import br.com.easysoftware.sgiapi.entities.Funcao;
 import br.com.easysoftware.sgiapi.repository.FuncaoRepository;
 
 @RestController

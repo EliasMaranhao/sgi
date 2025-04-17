@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.easysoftware.sgiapi.model.Ministerio;
+import br.com.easysoftware.sgiapi.dto.converters.MinisterioConverter;
+import br.com.easysoftware.sgiapi.dto.input.MinisterioInput;
+import br.com.easysoftware.sgiapi.dto.output.MinisterioOutput;
+import br.com.easysoftware.sgiapi.entities.Ministerio;
 import br.com.easysoftware.sgiapi.repository.MinisterioRepository;
 import br.com.easysoftware.sgiapi.service.MinisterioService;
 
@@ -28,21 +31,26 @@ public class MinisterioController {
     @Autowired
     private MinisterioRepository ministerioRepository;
 
+    @Autowired
+    private MinisterioConverter converter;
+
     @GetMapping
-    public ResponseEntity<List<Ministerio>> todos(){
-        return ResponseEntity.ok(ministerioRepository.findAll());
+    public ResponseEntity<List<MinisterioOutput>> todos(){
+        List<MinisterioOutput> dtos = converter.toList(ministerioRepository.findAll());
+        return ResponseEntity.ok(dtos);
     }
 
     @PostMapping
-    public ResponseEntity<Ministerio> salvar(@RequestBody Ministerio ministerio){
-        Ministerio salvo = ministerioService.salvar(ministerio);
-        return ResponseEntity.status(HttpStatus.CREATED).body(salvo);
+    public ResponseEntity<MinisterioOutput> salvar(@RequestBody MinisterioInput dto){
+        Ministerio ministerio = converter.convertToEntity(dto);
+        ministerio = ministerioService.salvar(ministerio);
+        return ResponseEntity.status(HttpStatus.CREATED).body(converter.convertToDTO(ministerio));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Ministerio> buscarPeloId(@PathVariable Long id){
+    public ResponseEntity<MinisterioOutput> buscarPeloId(@PathVariable Long id){
         Ministerio ministerio = ministerioService.buscarPorId(id);
-        return ResponseEntity.ok(ministerio);
+        return ResponseEntity.ok(converter.convertToDTO(ministerio));
     }
 
     @DeleteMapping
@@ -52,8 +60,10 @@ public class MinisterioController {
     }
 
     @PutMapping
-    public ResponseEntity<Ministerio> atualizar(@PathVariable Long id, @RequestBody Ministerio ministerio){
-        Ministerio atualizado = ministerioService.atualizar(id, ministerio);
-        return ResponseEntity.ok(atualizado);
+    public ResponseEntity<MinisterioOutput> atualizar(@PathVariable Long id, @RequestBody MinisterioInput dtoInput){
+        Ministerio atual = ministerioService.buscarPorId(id);
+        converter.copyToEntity(dtoInput, atual);
+        atual = ministerioService.salvar(atual);
+        return ResponseEntity.ok(converter.convertToDTO(atual));
     }
 }

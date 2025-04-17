@@ -1,4 +1,4 @@
-package br.com.easysoftware.sgiapi.dto;
+package br.com.easysoftware.sgiapi.dto.input;
 
 import java.time.LocalDate;
 import lombok.Builder;
@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class MembroDTO {
+public class MembroInput {
     
     private Long id;
     private String nome;

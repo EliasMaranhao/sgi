@@ -1,4 +1,4 @@
-package br.com.easysoftware.sgiapi.model;
+package br.com.easysoftware.sgiapi.entities;
 
 import lombok.Getter;
 

@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.easysoftware.sgiapi.dto.MembroDTO;
-import br.com.easysoftware.sgiapi.dto.ParenteDTO;
-import br.com.easysoftware.sgiapi.model.Membro;
-import br.com.easysoftware.sgiapi.model.Parente;
+import br.com.easysoftware.sgiapi.dto.input.MembroInput;
+import br.com.easysoftware.sgiapi.dto.input.ParenteInput;
+import br.com.easysoftware.sgiapi.entities.Membro;
+import br.com.easysoftware.sgiapi.entities.Parente;
 import br.com.easysoftware.sgiapi.service.MembroService;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -40,7 +40,7 @@ public class MembroController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MembroDTO> buscarPorId(@PathVariable Long id){
+    public ResponseEntity<MembroInput> buscarPorId(@PathVariable Long id){
         Membro membro = membroService.buscarPorId(id);
         return ResponseEntity.ok().body(getMembroDTO(membro));
     }
@@ -52,7 +52,7 @@ public class MembroController {
     }
 
     @GetMapping("/parentes")
-    public ResponseEntity<List<ParenteDTO>> buscarParentes(@RequestBody Membro membro){
+    public ResponseEntity<List<ParenteInput>> buscarParentes(@RequestBody Membro membro){
         List<Parente> parentes = membroService.buscarParentes(membro);
         return ResponseEntity.ok(getParentes(parentes));
     }
@@ -69,8 +69,8 @@ public class MembroController {
         return ResponseEntity.noContent().build();
     }
 
-    private MembroDTO getMembroDTO(Membro membro){
-        MembroDTO membroDTO = MembroDTO.builder()
+    private MembroInput getMembroDTO(Membro membro){
+        MembroInput membroDTO = MembroInput.builder()
                                             .dataBatismo(membro.getDataBatismo())
                                             .dataConversao(membro.getDataConversao())
                                             .dataNascimento(membro.getDataBatismo())
@@ -81,11 +81,11 @@ public class MembroController {
         return membroDTO;
     }
 
-    private List<ParenteDTO> getParentes(List<Parente> parentes){
+    private List<ParenteInput> getParentes(List<Parente> parentes){
 
-        List<ParenteDTO> parentesDTO = new ArrayList<>();
+        List<ParenteInput> parentesDTO = new ArrayList<>();
         for(Parente parente : parentes){
-            ParenteDTO parenteDTO = ParenteDTO.builder()
+            ParenteInput parenteDTO = ParenteInput.builder()
                                                 .parentescoEnum(parente.getParentesco())
                                                 .nome(parente.getNome())
                                                 .build();

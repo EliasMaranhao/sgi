@@ -12,10 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import br.com.easysoftware.sgiapi.model.Endereco;
-import br.com.easysoftware.sgiapi.model.Igreja;
-import br.com.easysoftware.sgiapi.model.Membro;
-import br.com.easysoftware.sgiapi.model.Ministerio;
+import br.com.easysoftware.sgiapi.entities.Endereco;
+import br.com.easysoftware.sgiapi.entities.Igreja;
+import br.com.easysoftware.sgiapi.entities.Membro;
+import br.com.easysoftware.sgiapi.entities.Ministerio;
 import br.com.easysoftware.sgiapi.service.MembroService;
 
 @SpringBootTest

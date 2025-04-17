@@ -1,4 +1,4 @@
-package br.com.easysoftware.sgiapi.model;
+package br.com.easysoftware.sgiapi.entities;
 
 import java.time.LocalDateTime;
 
@@ -12,26 +12,21 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Contato {
+public class Funcao {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Long id;
-    
-    private TipoContatoEnum tipo;
-    private String valor;
 
-    @JsonIgnore
-    @ManyToOne
-    private Membro membro;
+    @Column(nullable = false)
+    private String nome;
 
     @JsonIgnore
     @CreationTimestamp

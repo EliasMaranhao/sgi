@@ -11,30 +11,24 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
 
-import com.fasterxml.jackson.databind.DeserializationConfig;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import br.com.easysoftware.sgiapi.exceptionhandler.ApiExceptionHandler;
+
+import br.com.easysoftware.sgiapi.entities.Membro;
+import br.com.easysoftware.sgiapi.entities.Parente;
 import br.com.easysoftware.sgiapi.exceptionhandler.exceptions.EntidadeEmUsoException;
 import br.com.easysoftware.sgiapi.exceptionhandler.exceptions.MembroNaoEncontradoException;
-import br.com.easysoftware.sgiapi.model.Membro;
-import br.com.easysoftware.sgiapi.model.Parente;
 import br.com.easysoftware.sgiapi.repository.MembroRepository;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class MembroService {
-
-    private final ApiExceptionHandler apiExceptionHandler;
     
     @Autowired
     private MembroRepository membroRepository;
-
-    MembroService(ApiExceptionHandler apiExceptionHandler) {
-        this.apiExceptionHandler = apiExceptionHandler;
-    }
 
     public List<Membro> listar(){
         return membroRepository.findAll();
@@ -53,10 +47,12 @@ public class MembroService {
         return buscar(membro.getId()).getParentes();
     }
 
+    @Transactional
     public Membro salvar(Membro membro){
         return membroRepository.save(membro);
     }
 
+    @Transactional
     public Membro atualizar(Long id, Membro membro){
         Membro membroAtual = buscar(id);
         BeanUtils.copyProperties(membro, membroAtual, "id", "parentes", "endereco", "dataCadastro");
@@ -64,6 +60,7 @@ public class MembroService {
         return membroAtual;
     }
 
+    @Transactional
     public Membro atualizarParcial(Long id, Map<String, Object> campos, HttpServletRequest request){
         Membro membroAtual = buscar(id);
         merge(campos, membroAtual, request);
@@ -96,6 +93,7 @@ public class MembroService {
 
 	}
 
+    @Transactional
     public void remover(Long id){   
         Membro membro = buscar(id);
         try {

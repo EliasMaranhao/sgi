@@ -4,10 +4,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import br.com.easysoftware.sgiapi.entities.Ministerio;
 import br.com.easysoftware.sgiapi.exceptionhandler.exceptions.EntidadeEmUsoException;
 import br.com.easysoftware.sgiapi.exceptionhandler.exceptions.MinisterioNaoEncontradoException;
-import br.com.easysoftware.sgiapi.model.Ministerio;
 import br.com.easysoftware.sgiapi.repository.MinisterioRepository;
 
 @Service
@@ -16,6 +17,7 @@ public class MinisterioService {
     @Autowired
     private MinisterioRepository ministerioRepository;
 
+     @Transactional
     public Ministerio salvar(Ministerio ministerio){
         return ministerioRepository.save(ministerio);
     }
@@ -24,6 +26,7 @@ public class MinisterioService {
         return buscar(id);
     }
 
+    @Transactional
     public void remover(Long id){
         Ministerio ministerio = buscar(id);
         try {
@@ -33,6 +36,7 @@ public class MinisterioService {
         }
     }
 
+    @Transactional
     public Ministerio atualizar(Long id, Ministerio ministerio){
         Ministerio atual = buscar(id);
         BeanUtils.copyProperties(ministerio, atual, "id");

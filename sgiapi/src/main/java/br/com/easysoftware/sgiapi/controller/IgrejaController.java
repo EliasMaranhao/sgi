@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.easysoftware.sgiapi.model.Igreja;
+import br.com.easysoftware.sgiapi.dto.converters.IgrejaConverter;
+import br.com.easysoftware.sgiapi.dto.input.IgrejaInput;
+import br.com.easysoftware.sgiapi.dto.output.IgrejaOutput;
+import br.com.easysoftware.sgiapi.entities.Igreja;
 import br.com.easysoftware.sgiapi.repository.IgrejaRepository;
 import br.com.easysoftware.sgiapi.service.IgrejaService;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
@@ -29,26 +31,27 @@ public class IgrejaController {
     @Autowired
     private IgrejaRepository igrejaRepository;
 
-    @PostMapping
-    public ResponseEntity<Igreja> salvar(@RequestBody Igreja igreja){
-        Igreja salvo = igrejaService.salvar(igreja);
-        return ResponseEntity.status(HttpStatus.CREATED).body(salvo);
-    }
+    @Autowired
+    private IgrejaConverter converter;
 
-    @GetMapping("/{id}")
-    public String getMethodName(@RequestParam String param) {
-        return new String();
+    @PostMapping
+    public ResponseEntity<IgrejaOutput> salvar(@RequestBody IgrejaInput dto){
+        Igreja igreja = converter.convertToEntity(dto);
+        igreja = igrejaService.salvar(igreja);
+        return ResponseEntity.status(HttpStatus.CREATED).body(converter.convertToDTO(igreja));
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<Igreja> atualizar(@PathVariable Long id, @RequestBody Igreja igreja){
-        Igreja atualizado = igrejaService.atualizar(id, igreja);
-        return ResponseEntity.ok(atualizado);
+    public ResponseEntity<IgrejaOutput> atualizar(@PathVariable Long id, @RequestBody IgrejaInput dto){
+        Igreja atual = igrejaService.buscarPorId(id);
+        converter.copyToEntity(dto, atual);
+        atual = igrejaService.salvar(atual);
+        return ResponseEntity.ok(converter.convertToDTO(atual));
     }
 
     @GetMapping
-    public ResponseEntity<List<Igreja>> todos(){
-        List<Igreja> igrejas = igrejaRepository.findAll();
-        return ResponseEntity.ok(igrejas);
+    public ResponseEntity<List<IgrejaOutput>> todos(){
+        List<IgrejaOutput> dtos = converter.toList(igrejaRepository.findAll());
+        return ResponseEntity.ok(dtos);
     }
 }
