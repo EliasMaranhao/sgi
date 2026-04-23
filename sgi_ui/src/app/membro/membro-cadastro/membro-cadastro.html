@@ -12,6 +12,25 @@
                             </mat-card-header>
 
                             <mat-card-content>
+                                <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px" class="mt-20 foto-container">
+                                    <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" style="display: none;">
+
+                                    <mat-card class="preview-card" (click)="fileInput.click()">
+                                        @if (imagePreview) {
+                                            <img [src]="imagePreview" alt="Foto do membro">
+                                        } @else {
+                                            <div class="placeholder">
+                                                <mat-icon>add_a_photo</mat-icon>
+                                                <p>Clique para adicionar foto</p>
+                                            </div>
+                                        }
+                                    </mat-card>
+
+                                    <!-- <button type="button" mat-raised-button color="primary" (click)="fileInput.click()">
+                                        Selecionar Foto
+                                    </button> -->
+                                </div>
+
                                 <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px" class="mt-20">
                                     <div fxLayout="column" fxFlex="650px">
                                         <mat-form-field appearance="outline" class="full-width">
