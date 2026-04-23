@@ -1,0 +1,9 @@
+.mat-column-actions {
+  width: 120px;
+  text-align: center;
+}
+
+/* Ajuste para que os botões fiquem próximos um do outro */
+button[mat-icon-button] {
+  margin: 0 4px;
+}

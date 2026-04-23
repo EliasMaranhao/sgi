@@ -1,0 +1,46 @@
+<app-matriz-barra-navegacao></app-matriz-barra-navegacao>
+
+<div fxLayout="row" fxLayoutAlign="center" class="mt-20">
+    <div fxLayout="column" fxFlex="1000px">
+        <mat-card>
+            
+            <mat-card-header>
+                <mat-card-title>Matriz</mat-card-title>
+            </mat-card-header>
+            
+
+            <mat-card-content>
+                <table mat-table [dataSource]="dataSource">
+
+                <ng-container matColumnDef="pastorPresidente">
+                    <th mat-header-cell *matHeaderCellDef> Pastor presidente </th>
+                    <td mat-cell *matCellDef="let element"> {{element.pastorPresidente}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="nome">
+                    <th mat-header-cell *matHeaderCellDef> Nome </th>
+                    <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef> Ações </th>
+                    <td mat-cell *matCellDef="let element" style="display: flex; gap: 5px;">
+                    
+                    <button mat-icon-button color="primary" (click)="editar(element)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+
+                    <button mat-icon-button color="warn" (click)="confirmarExclusao(element)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

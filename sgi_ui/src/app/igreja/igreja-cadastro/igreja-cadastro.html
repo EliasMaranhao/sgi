@@ -1,0 +1,280 @@
+<app-igreja-barra-navegacao></app-igreja-barra-navegacao>
+
+<div fxLayout="row" fxLayoutAlign="center" class="mt-20">
+    <div fxLayout="column" fxFlex="1000px">
+        <form [formGroup]="igrejaForm" (ngSubmit)="salvar()">
+            <mat-tab-group animationDuration="2000ms" mat-align-tabs="start">
+                <mat-tab label="Igreja">
+                    <ng-template matTabContent>
+                        <mat-card>
+                            <mat-card-header>
+                                <mat-card-title>
+                                    Igreja - cadastro
+                                </mat-card-title>
+                            </mat-card-header>
+
+                            <mat-card-content>
+                                <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px" class="mt-20">
+                                    <div fxLayout="column" fxFlex="650px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Nome: *</mat-label>
+                                            <input type="text" placeholder="Ex: José da Silva" 
+                                                                            matInput
+                                                                            name="nome"
+                                                                            formControlName="nome"/>
+                                            <mat-error>Por favor, informe o nome para cadastro</mat-error>
+                                            <mat-icon matSuffix>church</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                    <div fxLayout="column" fxFlex="300px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Data inauguração: *</mat-label>
+                                            <input type="date" placeholder="Ex: 00/00/0000" 
+                                                            matInput
+                                                            name="dataInauguracao"
+                                                            formControlName="dataInauguracao"/>
+                                            <mat-error>Por favor, informe uma data</mat-error>
+                                            <mat-icon matSuffix>date_range</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
+                                    <div fxLayout="column" fxFlex="475px" formGroupName="matriz">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Igreja matriz: *</mat-label>
+                                            <mat-select formControlName="id" [compareWith]="compararObjetos" name="id">
+                                                @for (matriz of matrizes; track matriz.id) {
+                                                    <mat-option [value]="matriz.id">
+                                                        {{ matriz.nome }}
+                                                    </mat-option>
+                                                }
+                                            </mat-select>
+                                            <mat-error>Por favor, escolha uma opção</mat-error>
+                                            <mat-icon matSuffix>church</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                    <div fxLayout="column" fxFlex="475px">
+                                        <mat-form-field class="full-width" appearance="outline">
+                                            <mat-label>CNPJ: *</mat-label>
+                                            <input type="text" 
+                                                placeholder="Ex: 00.000.000/000-00" 
+                                                formControlName="cnpj"
+                                                name="cnpj"
+                                                mask="00.000.000/0000-00"
+                                                matInput/>
+                                            <mat-error>Por favor, informe o cnpj da filial</mat-error>
+                                            <mat-icon matSuffix>receipt_long</mat-icon>
+                                        </mat-form-field>
+                                        
+                                    </div>
+                                </div>
+                                <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
+                                    <div fxLayout="column" fxFlex="966px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Pastor dirigente: *</mat-label>
+                                            <input type="text" placeholder="Ex: José da Silva" 
+                                                            matInput
+                                                            name="pastorDirigente"
+                                                            formControlName="pastorDirigente"/>
+                                            <mat-error>Por favor, informe o nome para cadastro</mat-error>
+                                            <mat-icon matSuffix>church</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <!--
+                                <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
+                                    <div fxLayout="column" fxFlex="966px">
+                                        <mat-radio-group>
+                                            <mat-radio-button value="opcao1">Matriz</mat-radio-button>
+                                            <mat-radio-button value="opcao2">Filial</mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
+                                </div>
+                                -->             
+                            </mat-card-content>
+                        </mat-card>
+                    </ng-template>
+                </mat-tab>
+
+                <mat-tab label="Endereço" formGroupName="endereco">
+                    <ng-template matTabContent>
+                        <mat-card>
+                            <mat-card-header>
+                                <mat-card-title>
+                                    Endereço
+                                </mat-card-title>
+                            </mat-card-header>
+
+                            <mat-card-content class="mt-20">
+                                <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px" class="mt-20">
+                                    <div fxLayout="column" fxFlex="734px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Rua: *</mat-label>
+                                            <input type="text" placeholder="Ex: Amarildo barros" 
+                                                            matInput
+                                                            name="rua"
+                                                            formControlName="rua"/>
+                                            <mat-icon matSuffix>location_on</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                    <div fxLayout="column" fxFlex="215px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Número: *</mat-label>
+                                            <input type="text" placeholder="Ex: 34, 503, etc" 
+                                                            matInput
+                                                            name="numero"
+                                                            formControlName="numero"/>
+                                            <mat-icon matSuffix>numbers</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
+                                    <div fxLayout="column" fxFlex="734px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Complemento: *</mat-label>
+                                            <input type="text" placeholder="Ex: apartamento 103, bloco 6" 
+                                                            matInput
+                                                            name="complemento"
+                                                            formControlName="complemento"/>
+                                            <mat-icon matSuffix>info</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                    <div fxLayout="column" fxFlex="215px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Cep: *</mat-label>
+                                            <input type="text" placeholder="Ex: 00000-000" 
+                                                            matInput
+                                                            name="cep"
+                                                            formControlName="cep"
+                                                            mask="00000-000"/>
+                                            <mat-icon matSuffix>local_post_office</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
+                                    <div fxLayout="column" fxFlex="359px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Bairro: *</mat-label>
+                                            <input type="text" placeholder="Ex: Jacarépagua" 
+                                                            matInput
+                                                            name="bairro"
+                                                            formControlName="bairro"/>
+                                            <mat-icon matSuffix>location_city</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                    <div fxLayout="column" fxFlex="359px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Cidade: *</mat-label>
+                                            <input type="text" placeholder="Ex: Rio de Janeiro" 
+                                                            matInput
+                                                            name="cidade"
+                                                            formControlName="cidade"/>
+                                            <mat-icon matSuffix>location_city</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                    <div fxLayout="column" fxFlex="215px">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Estado: *</mat-label>
+                                            <mat-icon matSuffix>category</mat-icon>
+                                            
+                                            <mat-select name="uf" formControlName="uf">
+                                                <mat-option value="RJ">RJ</mat-option>
+                                                <mat-option value="SP">SP</mat-option>
+                                                <mat-option value="MG">MG</mat-option>
+                                                <mat-option value="BA">BA</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
+                                    <div fxLayout="column" fxFlex="966px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>País: *</mat-label>
+                                            <input type="text" placeholder="Ex: Brasil" 
+                                                            matInput
+                                                            name="pais"
+                                                            formControlName="pais"/>
+                                            <mat-icon matSuffix>country</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </ng-template>
+                </mat-tab>
+
+                <mat-tab label="Contatos" formGroupName="contato">
+                    <ng-template matTabContent>
+                        <mat-card>
+                            <mat-card-header>
+                                <mat-card-title>
+                                    Contatos
+                                </mat-card-title>
+                            </mat-card-header>
+
+                            <mat-card-content class="mt-20">
+                                <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px" class="mt-20">
+                                    <div fxLayout="column" fxFlex="475px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Telefone: *</mat-label>
+                                            <input type="text" placeholder="Ex: (00)0-0000-0000" 
+                                                        matInput
+                                                        name="telefone"
+                                                        formControlName="telefone"
+                                                        mask="(00)0-0000-0000"/>
+                                            <mat-icon matSuffix>phone</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                    <div fxLayout="column" fxFlex="475px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>E-mail: *</mat-label>
+                                            <input type="email" placeholder="adbonsucesso@gmail.com" 
+                                                            matInput
+                                                            name="email"
+                                                            formControlName="email"/>
+                                            <mat-icon matSuffix>email</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
+                                    <div fxLayout="column" fxFlex="475px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Whatsapp: *</mat-label>
+                                            <input type="text" placeholder="Ex: (00)0-0000-0000" 
+                                                        matInput
+                                                        name="whatsapp"
+                                                        formControlName="whatsapp"
+                                                        mask="(00)0-0000-0000"/>
+                                            <mat-icon matSuffix>chat</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                    <div fxLayout="column" fxFlex="475px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Instagram: *</mat-label>
+                                            <input type="text" placeholder="Ex: @adbonsucesso" 
+                                                        matInput
+                                                        name="instagram"
+                                                        formControlName="instagram"/>
+                                            <mat-icon matSuffix>photo_camera</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </ng-template>
+                </mat-tab>
+            </mat-tab-group>
+
+            <mat-card-actions>
+                <button mat-raised-button type="submit" color="primary" [disabled]="!igrejaForm.valid">
+                    <mat-icon>save</mat-icon>
+                    Salvar
+                </button>
+            </mat-card-actions>
+                
+        </form>
+    </div>
+</div>

@@ -1,0 +1,229 @@
+<div fxLayout="row" fxLayoutAlign="center">
+    <div fxLayout="column" fxFlex="1000px">
+        <form [formGroup]="membroForm" (ngSubmit)="salvar()">
+            <mat-tab-group animationDuration="0ms">
+                <mat-tab label="Dados Pessoais">
+                    <ng-template matTabContent>
+                        <mat-card appearance="outlined">
+                            <mat-card-header>
+                                <mat-card-title>
+                                    Membros
+                                </mat-card-title>
+                            </mat-card-header>
+
+                            <mat-card-content>
+                                <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px" class="mt-20">
+                                    <div fxLayout="column" fxFlex="650px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Nome: *</mat-label>
+                                            <input type="text" placeholder="Ex: José da Silva" 
+                                                            matInput
+                                                            name="nome"
+                                                            formControlName="nome"/>
+                                            <mat-icon matSuffix>person</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                    <div fxLayout="column" fxFlex="300px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Data nascimento: *</mat-label>
+                                            <input type="date" placeholder="Ex: 00/00/0000" 
+                                                            matInput
+                                                            name="dataNascimeto"
+                                                            formControlName="dataNascimento"/>
+                                            <mat-icon matSuffix>date_range</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
+                                    <div fxLayout="column" fxFlex="317px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Documento: *</mat-label>
+                                            <input type="text" placeholder="Ex: 000-000-000-00" 
+                                                            matInput
+                                                            name="documento"
+                                                            formControlName="documento"
+                                                            mask="000-000-000-00"/>
+                                            <mat-icon matSuffix>badge</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                    <div fxLayout="column" fxFlex="317px">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Tipo de documento</mat-label>
+                                            <mat-icon matSuffix>category</mat-icon>
+                                            
+                                            <mat-select>
+                                                <mat-option value="celular">CPF</mat-option>
+                                                <mat-option value="fixo">IDENTIDADE</mat-option>
+                                                <mat-option value="trabalho">CNH</mat-option>
+                                                <mat-option value="trabalho">PASSAPORTE</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div fxLayout="column" fxFlex="300px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Celular: *</mat-label>
+                                            <input type="text" placeholder="Ex: (00)0-0000-0000" 
+                                                            matInput
+                                                            name="celular"
+                                                            formControlName="celular"
+                                                            mask="(00)0-0000-0000"/>
+                                            <mat-icon matSuffix>phone</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
+                                    <div fxLayout="column" fxFlex="966px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>E-mail: *</mat-label>
+                                            <input type="email" placeholder="Ex: jose@email.com" 
+                                                            matInput
+                                                            name="email"
+                                                            formControlName="email"/>
+                                            <mat-icon matSuffix>email</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </ng-template>
+                </mat-tab>
+
+                <mat-tab label="Endereço" formGroupName="endereco">
+                    <ng-template matTabContent>
+                        <mat-card appearance="outlined">
+                            <mat-card-header>
+                                <mat-card-title>
+                                    Endereço
+                                </mat-card-title>
+                            </mat-card-header>
+
+                            <mat-card-content>
+                                <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px" class="mt-20">
+                                    <div fxLayout="column" fxFlex="734px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Rua: *</mat-label>
+                                            <input type="text" placeholder="Ex: Amarildo barros" 
+                                                            matInput
+                                                            name="rua"
+                                                            formControlName="rua"/>
+                                            <mat-icon matSuffix>location_on</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                    <div fxLayout="column" fxFlex="215px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Número: *</mat-label>
+                                            <input type="text" placeholder="Ex: 34, 503, etc" 
+                                                            matInput
+                                                            name="numero"
+                                                            formControlName="numero"/>
+                                            <mat-icon matSuffix>numbers</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
+                                    <div fxLayout="column" fxFlex="734px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Complemento: *</mat-label>
+                                            <input type="text" placeholder="Ex: apartamento 103, bloco 6" 
+                                                            matInput
+                                                            name="complemento"
+                                                            formControlName="complemento"/>
+                                            <mat-icon matSuffix>info</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                    <div fxLayout="column" fxFlex="215px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Cep: *</mat-label>
+                                            <input type="text" placeholder="Ex: 00000-000" 
+                                                            matInput
+                                                            name="cep"
+                                                            formControlName="cep"
+                                                            mask="00000-000"/>
+                                            <mat-icon matSuffix>local_post_office</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
+                                    <div fxLayout="column" fxFlex="359px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Bairro: *</mat-label>
+                                            <input type="text" placeholder="Ex: Jacarépagua" 
+                                                            matInput
+                                                            name="bairro"
+                                                            formControlName="bairro"/>
+                                            <mat-icon matSuffix>location_city</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                    <div fxLayout="column" fxFlex="359px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Cidade: *</mat-label>
+                                            <input type="text" placeholder="Ex: Rio de Janeiro" 
+                                                            matInput
+                                                            name="cidade"
+                                                            formControlName="cidade"/>
+                                            <mat-icon matSuffix>location_city</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                    <div fxLayout="column" fxFlex="215px">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Estado: *</mat-label>
+                                            <mat-icon matSuffix>category</mat-icon>
+                                            
+                                            <mat-select>
+                                                <mat-option value="RJ">RJ</mat-option>
+                                                <mat-option value="SP">SP</mat-option>
+                                                <mat-option value="MG">MG</mat-option>
+                                                <mat-option value="BA">BA</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
+                                    <div fxLayout="column" fxFlex="966px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>País: *</mat-label>
+                                            <input type="email" placeholder="Ex: Brasil" 
+                                                            matInput
+                                                            name="pais"
+                                                            formControlName="pais"/>
+                                            <mat-icon matSuffix>country</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </ng-template>
+                </mat-tab>
+
+                <mat-tab label="Dados eclesiásticos">
+                    <ng-template matTabContent>
+                        <mat-card appearance="outlined">
+                            <mat-card-header>
+                                <mat-card-title>
+                                    Dados eclesiásticos
+                                </mat-card-title>
+                            </mat-card-header>
+
+                            <mat-card-content>
+
+                            </mat-card-content>
+                        </mat-card>
+                    </ng-template>
+                </mat-tab>
+            </mat-tab-group>
+                
+            <mat-card-actions>
+                <!--ABRIR MODAL CADASTRO DE PARENTES-->
+                <button mat-raised-button (click)="openDialog()">Parentes</button>
+            </mat-card-actions>
+       
+        </form>
+    </div>
+
+</div>

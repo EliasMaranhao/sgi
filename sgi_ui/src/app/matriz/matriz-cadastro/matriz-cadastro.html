@@ -1,0 +1,107 @@
+<app-matriz-barra-navegacao></app-matriz-barra-navegacao>
+
+<div fxLayout="row" fxLayoutAlign="center" class="mt-20">
+    <div fxLayout="column" fxFlex="1000px">
+        <mat-tab-group animationDuration="2000ms" mat-align-tabs="start">
+            <mat-tab label="Matriz">
+                <ng-template matTabContent>
+                    <form [formGroup]="matrizForm" (ngSubmit)="salvar()">
+                        <mat-card appearance="outlined">
+                            <mat-card-header>
+                                <mat-card-title>
+                                    Matriz
+                                </mat-card-title>
+                            </mat-card-header>
+
+                            <mat-card-content>
+                                <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px" class="mt-20">
+                                    <div fxLayout="column" fxFlex="475px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Nome: *</mat-label>
+                                            <input type="text" placeholder="Ex: José da Silva" 
+                                                            matInput
+                                                            name="nome"
+                                                            formControlName="nome"/>
+                                            <mat-error>Por favor, informe o nome para cadastro</mat-error>
+                                            <mat-icon matSuffix>church</mat-icon>
+                                        </mat-form-field>
+                                    </div>  
+                                    <div fxLayout="column" fxFlex="475px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Pastor presidente: *</mat-label>
+                                            <input type="text" placeholder="Ex: José da Silva" 
+                                                            matInput
+                                                            name="pastorPresidente"
+                                                            formControlName="pastorPresidente"/>
+                                            <mat-icon matSuffix>person</mat-icon>
+                                            <mat-error>Informe o nome para cadastro</mat-error>
+                                        </mat-form-field>
+                                    </div>                      
+                                </div>
+                                <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
+                                    <div fxLayout="column" fxFlex="475px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Vice presidente: *</mat-label>
+                                            <input type="text" placeholder="Ex: José da Silva" 
+                                                            matInput
+                                                            name="vicePresidente"
+                                                            formControlName="vicePresidente"/>
+                                            <mat-icon matSuffix>person</mat-icon>
+                                            <mat-error>Informe o nome para cadastro</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div fxLayout="column" fxFlex="475px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Denominação: *</mat-label>
+                                            <mat-select [(value)]="selecionado" formControlName="denominacao" name="denominacao">
+                                                
+                                                <mat-option value="Assembléia de Deus">Assembléia de Deus</mat-option>
+                                                <mat-option value="Igreja Universal do Reino de Deus">Igreja Universal do Reino de Deus</mat-option>
+                                                <mat-option value="Nova Vida">Nova Vida</mat-option>
+                                                <mat-option value="Vida Nova">Vida Nova</mat-option>
+                                                <mat-option value="Deus é Amor">Deus é Amor</mat-option>
+                                                <mat-option value="Igreja Batista">Igreja Batista</mat-option>
+                                                <mat-option value="Restauração">Restauração</mat-option>
+                                                <mat-option value="Metodista Wesleyana">Metodista Wesleyana</mat-option>
+                                                
+                                            </mat-select>
+                                            <mat-error>Por favor, escolha uma opção</mat-error>
+                                            <mat-icon matSuffix>church</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                            
+                        <mat-card-actions fxLayoutGap="5px">
+                            @if (!idParaEdicao) {
+                                <button mat-raised-button type="submit" color="primary" [disabled]="!matrizForm.valid">
+                                    <mat-icon>save</mat-icon>
+                                    Salvar
+                                </button>
+                            }@else {
+                                <button type="submit" mat-flat-button color="primary">
+                                    <mat-icon fontIcon="refresh"></mat-icon>
+                                    Atualizar
+                                </button>
+                            }
+                            <button type="button" mat-flat-button color="accent" class="ml-5">
+                                <mat-icon fontIcon="backspace"></mat-icon>
+                                Limpar
+                            </button>
+                        </mat-card-actions>
+                    </form>
+                </ng-template>
+            </mat-tab>
+
+            <mat-tab label="Filiais">
+                <ng-template matTabContent>
+                    <app-igreja-consulta [filiais]="filiais" 
+                                         (filialExcluida)="removerDaLista($event)">
+                    </app-igreja-consulta>
+                    
+                </ng-template>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

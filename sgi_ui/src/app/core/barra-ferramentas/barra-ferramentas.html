@@ -1,0 +1,49 @@
+<mat-toolbar color="primary" class="mat-elevation-z4">
+  <button mat-icon-button (click)="isExpanded = !isExpanded" class="toggle-button">
+    <mat-icon>{{ isExpanded ? 'chevron_left' : 'menu' }}</mat-icon>
+  </button>
+  <span>Assembléia de Deus em Bonsucesso</span>
+</mat-toolbar>
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer mode="side" opened [class.menu-opened]="isExpanded" [class.menu-closed]="!isExpanded">
+
+    <mat-nav-list>
+      @for (item of menuItens; track $index) {
+        <mat-expansion-panel [disabled]="!isExpanded" class="menu-item-expansion" [class.is-collapsed]="!isExpanded">
+          
+          <mat-expansion-panel-header [matTooltip]="item.tooltip">
+            <mat-panel-title>
+              <mat-icon style="margin-right: 12px;">{{ item.icone }}</mat-icon>
+              @if (isExpanded) {
+                <span class="menu-text">{{ item.titulo }}</span>
+              }
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <mat-nav-list class="sub-menu">
+            @for (sub of item.submenus; track $index) {
+              <a mat-list-item [routerLink]="sub.rota">
+                @if (isExpanded) {
+                  <span matListItemTitle>{{ sub.label }}</span>
+                }
+                <mat-icon matListItemIcon>{{sub.icone}}</mat-icon>
+              </a>
+            }
+          </mat-nav-list>
+
+        </mat-expansion-panel>
+      } @empty {
+        <p>Nenhum item de menu disponível.</p>
+      }
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- O CONTEÚDO PRINCIPAL -->
+  <mat-sidenav-content>
+    <main>
+      <router-outlet></router-outlet> 
+    </main>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
