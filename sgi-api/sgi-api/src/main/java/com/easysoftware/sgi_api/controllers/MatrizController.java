@@ -9,15 +9,18 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.easysoftware.sgi_api.dto.FilialResponseDTO;
+import com.easysoftware.sgi_api.dto.MatrizDTO;
 import com.easysoftware.sgi_api.dto.MatrizResponseDTO;
 import com.easysoftware.sgi_api.entities.Matriz;
 import com.easysoftware.sgi_api.service.MatrizService;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import jakarta.validation.Valid;
 
 
 @RestController
@@ -25,10 +28,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @CrossOrigin(origins = "http://localhost:4200")
 public class MatrizController {
     
+    private final AutenticacaoController autenticacaoController;
     private final MatrizService matrizService;
 
-    public MatrizController(MatrizService matrizService) {
+    public MatrizController(MatrizService matrizService, AutenticacaoController autenticacaoController) {
         this.matrizService = matrizService;
+        this.autenticacaoController = autenticacaoController;
     }
 
     @PostMapping
@@ -59,6 +64,12 @@ public class MatrizController {
     public ResponseEntity<List<FilialResponseDTO>> listarFiliais(@PathVariable Long id) {
         List<FilialResponseDTO> filiais = matrizService.buscarFiliaisPeloMatrizId(id);
         return ResponseEntity.ok(filiais);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<MatrizResponseDTO> atualizar(@PathVariable Long id, @RequestBody @Valid MatrizDTO dto){
+        MatrizResponseDTO matrizResponseDTO = matrizService.atualizar(id, dto);
+        return ResponseEntity.ok(matrizResponseDTO);
     }
     
 }

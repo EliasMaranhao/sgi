@@ -4,7 +4,8 @@ public record FilialDTO(
     String nome,
     String pastorDirigente,
     String dataInauguracao,
-    Long matriz_id
+    Long matriz_id,
+    String cnpj
 ) {
     
 }

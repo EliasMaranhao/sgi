@@ -58,6 +58,17 @@ body {
   margin-top: 10px;
 }
 
-.spacer {
-    flex: 1 1 auto;
+/* Estilos para deixar todos os menus arredondados e modernos */
+.mat-mdc-menu-panel {
+  border-radius: 12px !important;
+  margin-top: 8px;
+}
+
+.mat-mdc-menu-item {
+  margin: 4px 8px !important;
+  border-radius: 8px !important;
+  
+  &:hover {
+    background-color: rgba(63, 81, 181, 0.08) !important;
+  }
 }

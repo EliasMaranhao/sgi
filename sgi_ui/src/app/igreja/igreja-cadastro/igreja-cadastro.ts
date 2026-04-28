@@ -41,7 +41,7 @@ export class IgrejaCadastro implements OnInit{
 
   igrejaForm: FormGroup;
   matrizes: Matriz[] = [];
-  idParaEdicao?: number;
+  idParaEdicao!: number;
 
   private snackBar = inject(MatSnackBar);
   private route = inject(ActivatedRoute);
@@ -142,6 +142,22 @@ export class IgrejaCadastro implements OnInit{
           verticalPosition: 'top',   // Cima
           panelClass: ['error-snackbar'] // Classe CSS opcional
         });
+      }
+    })
+  }
+
+  atualizar(){
+    this.igrejaService.atualizarFilial(this.idParaEdicao, this.igrejaForm.value).subscribe({
+      next: response => {
+          this.snackBar.open('Atualização realizada com sucesso!', 'Fechar', {
+          duration: 3000,           // 3 segundos
+          horizontalPosition: 'end', // Direita
+          verticalPosition: 'top',   // Cima
+          panelClass: ['success-snackbar'] // Classe CSS opcional
+        });
+      },
+      error: erro => {
+        console.log(erro)
       }
     })
   }

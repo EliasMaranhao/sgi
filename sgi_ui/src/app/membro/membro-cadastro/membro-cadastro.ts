@@ -1,4 +1,4 @@
-import { Component, inject  } from '@angular/core';
+import { Component, inject, OnInit  } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatInputModule } from '@angular/material/input';
@@ -11,6 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDialog } from '@angular/material/dialog';
 import { ParenteCadastro } from '../parente-cadastro/parente-cadastro';
 import { MatButtonModule } from '@angular/material/button';
+import { MatRadioModule } from '@angular/material/radio';
 
 @Component({
   selector: 'app-membro-cadastro',
@@ -24,12 +25,13 @@ import { MatButtonModule } from '@angular/material/button';
     MatIconModule,
     NgxMaskDirective,
     MatSelectModule,
-    MatButtonModule
+    MatButtonModule,
+    MatRadioModule
   ],
   templateUrl: './membro-cadastro.html',
   styleUrl: './membro-cadastro.scss',
 })
-export class MembroCadastro {
+export class MembroCadastro implements OnInit{
   membroForm: FormGroup;
   imagePreview: string | null = null;
 
@@ -45,6 +47,12 @@ export class MembroCadastro {
       email: ['', [Validators.required, Validators.email]],
       celular: [''],
       foto: [null],
+
+      igreja: ['', [Validators.required]],
+      dataBatismo: [[Validators.required]],
+      veioOutraIgreja: [false, [Validators.required]],
+      recebidoEm: [{value: '', disabled: true}, [Validators.required]],
+
       endereco: this.fb.group({
         rua: ['', [Validators.required]],
         numero: ['', [Validators.required]],
@@ -55,6 +63,18 @@ export class MembroCadastro {
         uf: ['', [Validators.required]],
         pais: ['', [Validators.required]]
       })
+    });
+  }
+
+  ngOnInit(): void {
+    this.membroForm.get('veioOutraIgreja')?.valueChanges.subscribe(veioOutraIgreja => {
+      const dataControl = this.membroForm.get('recebidoEm');
+      if (veioOutraIgreja) {
+        dataControl?.enable(); // Habilita o campo de data
+      } else {
+        dataControl?.disable(); // Desabilita e limpa o campo
+        dataControl?.setValue('');
+      }
     });
   }
 

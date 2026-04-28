@@ -1,0 +1,19 @@
+.header-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.main-container {
+  /* A altura padrão da mat-toolbar é 64px. 
+     Adicionamos um pouco mais para dar um respiro (ex: 80px).
+  */
+  margin-top: 80px; 
+  padding: 20px;
+  
+  /* Garante que o conteúdo ocupe pelo menos a altura da tela */
+  min-height: calc(100vh - 80px);
+  background-color: #f5f5f5; // Um cinza bem claro para destacar os cards
+}

@@ -13,7 +13,7 @@ import { MatrizBarraNavegacao } from '../matriz-barra-navegacao/matriz-barra-nav
 import { MatTabsModule } from '@angular/material/tabs';
 import { IgrejaConsulta } from '../../igreja/igreja-consulta/igreja-consulta';
 import { ActivatedRoute } from '@angular/router';
-import { Filial } from '../../models';
+import { Filial, Matriz } from '../../models';
 
 @Component({
   selector: 'app-matriz-cadastro',
@@ -37,7 +37,7 @@ import { Filial } from '../../models';
 export class MatrizCadastro implements OnInit{
   matrizForm: FormGroup;
   selecionado?: string;
-  idParaEdicao?: number;
+  idParaEdicao!: number;
   filiais: Filial[] = [];
 
   private snackBar = inject(MatSnackBar);
@@ -55,10 +55,9 @@ export class MatrizCadastro implements OnInit{
     });
   }
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
+    this.idParaEdicao = +(this.route.snapshot.paramMap.get('id') || 0);
 
-    if (id) {
-      this.idParaEdicao = +id;
+    if (this.idParaEdicao) {
       this.carregarDados(this.idParaEdicao);
     }
   }
@@ -73,7 +72,6 @@ export class MatrizCadastro implements OnInit{
         this.matrizForm.get('denominacao')?.setValue(response.denominacao)
         this.buscarFiliaisPeloMatrizId(response.id)
       },
-
       error: erro => {
         console.log('Erro: ', erro);
       }
@@ -85,7 +83,6 @@ export class MatrizCadastro implements OnInit{
       next: response => {
         this.filiais = response;
       },
-
       error: erro => {
         console.log(erro);
       }
@@ -104,7 +101,7 @@ export class MatrizCadastro implements OnInit{
   salvar(){
     this.igrejaService.cadastrarMatriz(this.matrizForm.value).subscribe({
       next: (resp) => {
-        this.snackBar.open('Usuário criado com sucesso!', 'Fechar', {
+        this.snackBar.open('Matriz criada com sucesso!', 'Fechar', {
           duration: 3000,           // 3 segundos
           horizontalPosition: 'end', // Direita
           verticalPosition: 'top',   // Cima
@@ -119,6 +116,22 @@ export class MatrizCadastro implements OnInit{
           verticalPosition: 'top',   // Cima
           panelClass: ['error-snackbar'] // Classe CSS opcional
         });
+      }
+    })
+  }
+
+  atualizar(){
+    this.igrejaService.atualizarMatriz(this.idParaEdicao, this.matrizForm.value).subscribe({
+      next: response => {
+          this.snackBar.open('Atualização realizada com sucesso!', 'Fechar', {
+          duration: 3000,           // 3 segundos
+          horizontalPosition: 'end', // Direita
+          verticalPosition: 'top',   // Cima
+          panelClass: ['success-snackbar'] // Classe CSS opcional
+        });
+      },
+      error: erro => {
+        console.log(erro)
       }
     })
   }

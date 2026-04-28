@@ -1,23 +1,23 @@
 package com.easysoftware.sgi_api.dto.converters;
 
+import org.mapstruct.BeanMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
+
+import com.easysoftware.sgi_api.dto.FilialDTO;
 import com.easysoftware.sgi_api.dto.FilialResponseDTO;
-import com.easysoftware.sgi_api.dto.MatrizResponseDTO;
-import com.easysoftware.sgi_api.entities.Contato;
-import com.easysoftware.sgi_api.entities.Endereco;
 import com.easysoftware.sgi_api.entities.Filial;
 
-public class FilialMapper {
+@Mapper(componentModel = "spring")
+public interface FilialMapper {
     
-    public static FilialResponseDTO entidadeParaDTO(Filial filial){
-        
-        Endereco endereco = filial.getEndereco();
-        Contato contato = filial.getContato();
-        MatrizResponseDTO dto = null;
+    FilialResponseDTO toDto(Filial filial);
+    Filial toEntity(FilialDTO filialDto);
 
-        if(filial.getMatriz() != null){
-            dto = MatrizMapper.entidadeParaDTO(filial.getMatriz());
-        }
-       
-        return new FilialResponseDTO(filial.getId(), filial.getNome(), filial.getPastorDirigente(), filial.getDataInauguracao(), endereco, contato, filial.getCnpj(), dto);
-    }
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "id", ignore = true) // O ID nunca deve ser alterado
+    @Mapping(target = "membros", ignore = true) // Geralmente atualizamos filiais em outro endpoint
+    void updateEntityFromDto(FilialDTO dto, @MappingTarget Filial filial);
 }

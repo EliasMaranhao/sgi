@@ -14,7 +14,6 @@
                             <mat-card-content>
                                 <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px" class="mt-20 foto-container">
                                     <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" style="display: none;">
-
                                     <mat-card class="preview-card" (click)="fileInput.click()">
                                         @if (imagePreview) {
                                             <img [src]="imagePreview" alt="Foto do membro">
@@ -25,10 +24,6 @@
                                             </div>
                                         }
                                     </mat-card>
-
-                                    <!-- <button type="button" mat-raised-button color="primary" (click)="fileInput.click()">
-                                        Selecionar Foto
-                                    </button> -->
                                 </div>
 
                                 <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px" class="mt-20">
@@ -230,7 +225,77 @@
                             </mat-card-header>
 
                             <mat-card-content>
+                                <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px" class="mt-20">
+                                    <div fxLayout="column" fxFlex="734px">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Congregação: *</mat-label>
+                                            <mat-icon matSuffix>category</mat-icon>
+                                            
+                                            <mat-select>
+                                                <mat-option value="RJ">EBENZER</mat-option>
+                                                <mat-option value="SP">MONTE DAS OLIVEIRAS</mat-option>
+                                                <mat-option value="MG">LÍRIOS DOS VALE</mat-option>
+                                                <mat-option value="BA">AMORIN</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div fxLayout="column" fxFlex="215px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Data de batismo: *</mat-label>
+                                            <input type="date" placeholder="" 
+                                                            matInput
+                                                            name="dataBatismo"
+                                                            formControlName="dataBatismo"/>
+                                            <mat-icon matSuffix>numbers</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
+                                    <div fxLayout="column" fxFlex="315px">
+                                        <label id="tipo-membro-label" style="display: block; margin-bottom: 8px;">
+                                            Veio de outra igreja: *
+                                        </label>
+                                        <mat-radio-group 
+                                            aria-labelledby="tipo-membro-label"
+                                            name="veioOutraIgreja"
+                                            formControlName="veioOutraIgreja" 
+                                            color="primary">
+                                            
+                                            <mat-radio-button [value]="true" style="margin-right: 16px;">
+                                            Sim
+                                            </mat-radio-button>
+                                            
+                                            <mat-radio-button [value]="false">
+                                            Não
+                                            </mat-radio-button>
 
+                                        </mat-radio-group>
+                                    </div>
+                                    <div fxLayout="column" fxFlex="634px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Igreja anterior: *</mat-label>
+                                            <input type="text" placeholder=""
+                                                            matInput
+                                                            name="igrejaAnterior"
+                                                            formControlName="igrejaAnterior"/>
+                                            <mat-icon matSuffix>date_range</mat-icon>
+                                            <mat-error>Por favor informe o nome da igreja anterior.</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px" class="mt-20">
+                                    <div fxLayout="column" fxFlex="300px">
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Recebido em: *</mat-label>
+                                            <input type="date" placeholder=""
+                                                            matInput
+                                                            name="recebidoEm"
+                                                            formControlName="recebidoEm"/>
+                                            <mat-icon matSuffix>date_range</mat-icon>
+                                            <mat-error>A data é obrigatória quando habilitada.</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
                             </mat-card-content>
                         </mat-card>
                     </ng-template>

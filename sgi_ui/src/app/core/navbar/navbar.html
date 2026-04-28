@@ -1,0 +1,62 @@
+<mat-toolbar color="primary" class="header-toolbar mat-elevation-z6">
+    
+    <div class="logo-container" routerLink="/dashboard" style="cursor: pointer;">
+        <img src="/adbonsucesso.jpg" alt="SGI Logo" class="logo-img">
+        <span class="logo-text">Assembléia de Deus em Bonsucesso</span>
+    </div>
+
+    @if (unidadeAtual) {    
+        <div class="unidade-context">
+            <mat-icon>location_city</mat-icon>
+            <span class="unidade-nome">{{ unidadeAtual.nome }}</span>
+            <span class="unidade-badge">{{ unidadeAtual.identificador }}</span>
+        </div>
+    }
+
+    <span class="spacer"></span>
+
+    <div class="nav-items">
+        <button mat-button routerLink="/dashboard">
+            <mat-icon>dashboard</mat-icon>
+            Dashboard
+        </button>
+
+        <button mat-button [matMenuTriggerFor]="menuCadastros">
+            <mat-icon>app_registration</mat-icon>
+                Cadastros
+            <mat-icon>expand_more</mat-icon>
+        </button>
+
+        <mat-menu #menuCadastros="matMenu" class="custom-menu">
+            <button mat-menu-item routerLink="/membros">
+                <mat-icon>group</mat-icon>
+                <span>Membros</span>
+            </button>
+
+            <button mat-menu-item routerLink="/unidades">
+                <mat-icon>account_tree</mat-icon>
+                <span>Unidades/Filiais</span>
+            </button>
+
+            <mat-divider></mat-divider>
+
+            <button mat-menu-item routerLink="/outros">
+                <mat-icon>more_horiz</mat-icon>
+                <span>Outros Cadastros</span>
+            </button>
+        </mat-menu>
+
+        <button mat-button routerLink="/configuracoes">
+            <mat-icon>settings</mat-icon>
+            Configurações
+        </button>
+
+        <button mat-icon-button (click)="logout()" title="Sair">
+            <mat-icon>logout</mat-icon>
+        </button>
+    </div>
+</mat-toolbar>
+
+<main class="main-container">
+  <router-outlet></router-outlet>
+</main>

@@ -27,6 +27,10 @@ export class IgrejaService {
     return this.http.get<Matriz>(`${this.apiUrl}/matriz/${id}`)
   }
 
+  atualizarMatriz(id: number, matriz: Matriz): Observable<Matriz> {
+    return this.http.put<Matriz>(`${this.apiUrl}/matriz/${id}`, matriz);
+  }
+
   cadastrarFilial(filial: Filial): Observable<Filial>{
     return this.http.post<Filial>(`${this.apiUrl}/filial`, filial);
   }
@@ -45,5 +49,9 @@ export class IgrejaService {
 
   buscarFilialTodas(): Observable<Filial[]>{
     return this.http.get<Filial[]>(`${this.apiUrl}/filial`);
+  }
+
+  atualizarFilial(id: number, filial: Filial): Observable<Filial>{
+    return this.http.put<Filial>(`${this.apiUrl}/filial/${id}`, filial);
   }
 }
