@@ -3,7 +3,7 @@
 <div fxLayout="row" fxLayoutAlign="center" class="mt-20">
     <div fxLayout="column" fxFlex="1000px">
         <form [formGroup]="igrejaForm" (ngSubmit)="salvar()">
-            <mat-tab-group animationDuration="2000ms" mat-align-tabs="start">
+            <mat-tab-group animationDuration="500ms" mat-align-tabs="start">
                 <mat-tab label="Igreja">
                     <ng-template matTabContent>
                         <mat-card>
@@ -268,7 +268,7 @@
                 </mat-tab>
             </mat-tab-group>
 
-            <mat-card-actions>
+            <mat-card-actions fxLayoutGap="5px">
                 @if (!idParaEdicao) {
                     <button mat-raised-button type="submit" color="primary" [disabled]="!igrejaForm.valid">
                         <mat-icon>save</mat-icon>

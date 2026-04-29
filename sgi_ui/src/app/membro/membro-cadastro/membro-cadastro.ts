@@ -34,6 +34,7 @@ import { MatRadioModule } from '@angular/material/radio';
 export class MembroCadastro implements OnInit{
   membroForm: FormGroup;
   imagePreview: string | null = null;
+  idParaEdicao!: number;
 
   private dialog = inject(MatDialog); // Injeção moderna (inject)
   private fb = inject(FormBuilder);
@@ -124,5 +125,9 @@ export class MembroCadastro implements OnInit{
   // Boa prática: limpar a memória quando o usuário sai da tela
   ngOnDestroy() {
     this.limparPreviewAnterior();
+  }
+
+  atualizar(){
+    
   }
 }

@@ -1,7 +1,7 @@
-<div fxLayout="row" fxLayoutAlign="center">
+<div fxLayout="row" fxLayoutAlign="center" class="mt-20">
     <div fxLayout="column" fxFlex="1000px">
         <form [formGroup]="membroForm" (ngSubmit)="salvar()">
-            <mat-tab-group animationDuration="0ms">
+            <mat-tab-group animationDuration="500ms" mat-align-tabs="start">
                 <mat-tab label="Dados Pessoais">
                     <ng-template matTabContent>
                         <mat-card appearance="outlined">
@@ -251,7 +251,7 @@
                                     </div>
                                 </div>
                                 <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
-                                    <div fxLayout="column" fxFlex="315px">
+                                    <div fxLayout="column" fxFlex="966px">
                                         <label id="tipo-membro-label" style="display: block; margin-bottom: 8px;">
                                             Veio de outra igreja: *
                                         </label>
@@ -271,19 +271,21 @@
 
                                         </mat-radio-group>
                                     </div>
-                                    <div fxLayout="column" fxFlex="634px">
+                                </div>
+                                <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
+                                    <div fxLayout="column" fxFlex="966px">
                                         <mat-form-field appearance="outline" class="full-width">
                                             <mat-label>Igreja anterior: *</mat-label>
                                             <input type="text" placeholder=""
                                                             matInput
                                                             name="igrejaAnterior"
                                                             formControlName="igrejaAnterior"/>
-                                            <mat-icon matSuffix>date_range</mat-icon>
+                                            <mat-icon matSuffix>church</mat-icon>
                                             <mat-error>Por favor informe o nome da igreja anterior.</mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>
-                                <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px" class="mt-20">
+                                <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
                                     <div fxLayout="column" fxFlex="300px">
                                         <mat-form-field appearance="outline" class="full-width">
                                             <mat-label>Recebido em: *</mat-label>
@@ -302,9 +304,25 @@
                 </mat-tab>
             </mat-tab-group>
                 
-            <mat-card-actions>
+            <mat-card-actions fxLayoutGap="5px">
                 <!--ABRIR MODAL CADASTRO DE PARENTES-->
-                <button mat-raised-button (click)="openDialog()">Parentes</button>
+                <button mat-raised-button color="accent" (click)="openDialog()">Parentes</button>
+
+                @if (!idParaEdicao) {
+                    <button mat-raised-button type="submit" color="primary" [disabled]="!membroForm.valid">
+                        <mat-icon>save</mat-icon>
+                        Salvar
+                    </button>
+                }@else {
+                    <button type="button" mat-flat-button color="primary" (click)="atualizar()" [disabled]="!membroForm.valid">
+                        <mat-icon fontIcon="refresh"></mat-icon>
+                        Atualizar
+                    </button>
+                }
+                <button type="button" mat-flat-button color="accent" class="ml-5">
+                    <mat-icon fontIcon="backspace"></mat-icon>
+                    Limpar
+                </button>
             </mat-card-actions>
        
         </form>

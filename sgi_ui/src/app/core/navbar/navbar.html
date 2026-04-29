@@ -2,7 +2,7 @@
     
     <div class="logo-container" routerLink="/dashboard" style="cursor: pointer;">
         <img src="/adbonsucesso.jpg" alt="SGI Logo" class="logo-img">
-        <span class="logo-text">Assembléia de Deus em Bonsucesso</span>
+        <span class="logo-text">AD Bonsucesso</span>
     </div>
 
     @if (unidadeAtual) {    
@@ -16,40 +16,25 @@
     <span class="spacer"></span>
 
     <div class="nav-items">
-        <button mat-button routerLink="/dashboard">
-            <mat-icon>dashboard</mat-icon>
-            Dashboard
-        </button>
 
-        <button mat-button [matMenuTriggerFor]="menuCadastros">
-            <mat-icon>app_registration</mat-icon>
-                Cadastros
-            <mat-icon>expand_more</mat-icon>
-        </button>
-
-        <mat-menu #menuCadastros="matMenu" class="custom-menu">
-            <button mat-menu-item routerLink="/membros">
-                <mat-icon>group</mat-icon>
-                <span>Membros</span>
+        @for (item of menuItens; track item.titulo) {
+            <button mat-button [matMenuTriggerFor]="dynamicMenu" [matTooltip]="item.tooltip">
+                <mat-icon>{{ item.icone }}</mat-icon>
+                {{ item.titulo }}
+                <mat-icon>expand_more</mat-icon>
             </button>
 
-            <button mat-menu-item routerLink="/unidades">
-                <mat-icon>account_tree</mat-icon>
-                <span>Unidades/Filiais</span>
-            </button>
-
-            <mat-divider></mat-divider>
-
-            <button mat-menu-item routerLink="/outros">
-                <mat-icon>more_horiz</mat-icon>
-                <span>Outros Cadastros</span>
-            </button>
-        </mat-menu>
-
-        <button mat-button routerLink="/configuracoes">
-            <mat-icon>settings</mat-icon>
-            Configurações
-        </button>
+            <mat-menu #dynamicMenu="matMenu">
+                @for (sub of item.submenus; track sub.label) {
+                    <button mat-menu-item [routerLink]="sub.rota">
+                        @if (sub.icone) {
+                            <mat-icon>{{ sub.icone }}</mat-icon>
+                        }
+                        <span>{{ sub.label }}</span>
+                    </button>
+                }
+            </mat-menu>
+        }
 
         <button mat-icon-button (click)="logout()" title="Sair">
             <mat-icon>logout</mat-icon>
