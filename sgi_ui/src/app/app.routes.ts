@@ -47,9 +47,9 @@ export const routes: Routes = [
     component: MembroCadastro, 
     canActivate: [authGuard] // Proteção aplicada aqui!
   },
-  // { 
-  //   path: '', 
-  //   redirectTo: '/login', 
-  //   pathMatch: 'full' 
-  // }
+  { 
+    path: '', 
+    redirectTo: '/login', 
+    pathMatch: 'full' 
+  }
 ];

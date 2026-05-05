@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { jwtDecode } from 'jwt-decode';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { delay, tap } from 'rxjs';
 
@@ -19,13 +20,22 @@ export class LoginService {
     );
   }
 
-  getToken() {
+  getToken(): string | null {
     return localStorage.getItem('token');
   }
 
-  isLoggedIn(): boolean {
-    const token = this.getToken();
-    // Aqui você pode adicionar uma lógica para checar se o token expirou
+  isLoggedIn(token: string | null): boolean {
+    if (!token) return false;
+
+    try {
+      const decoded: any = jwtDecode(token);
+      const currentTime = Math.floor(Date.now() / 1000);
+
+      // Verifica se a propriedade 'exp' existe e se é maior que o tempo atual
+      return decoded.exp > currentTime;
+    } catch (error) {
+      return false; // Token malformado ou inválido
+    }
     return !!token; 
   }
 
