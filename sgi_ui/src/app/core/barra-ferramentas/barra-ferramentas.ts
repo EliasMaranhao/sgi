@@ -30,7 +30,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 })
 export class BarraFerramentas {
 
-  private router = inject(Router);
+  router = inject(Router);
   isExpanded: boolean = false;
 
   menuItens = [

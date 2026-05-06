@@ -15,6 +15,7 @@ export class LoginService {
   login(dados: any) {
     return this.http.post<any>(this.API, dados).pipe(
       tap(res => {
+        console.log('Token guardado no localStorage');
         localStorage.setItem('token', res.token);
       })
     );

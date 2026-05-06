@@ -13,16 +13,19 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     return throwError(() => new Error('Sessão expirada.')); 
   }
 
+  // 2. Definir qual requisição prosseguirá (a original ou a clonada)
+  let requestToForward = req;
+
   if (token && !req.url.includes('/api/login')) {
-    console.log('TOKEN ADICIONADO');
-    const authReq = req.clone({
+    console.log('TOKEN ADICIONADO NA URL ' + req.url);
+    requestToForward = req.clone({
       setHeaders: {
         Authorization: `Bearer ${token}`
       }
     });
   }
 
-  return next(req).pipe(
+  return next(requestToForward).pipe(
     catchError((error: HttpErrorResponse) => {
       if (error.status === 401) {
         authService.logout();

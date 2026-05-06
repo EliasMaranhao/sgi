@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormGroup, Validators, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -34,16 +34,17 @@ export class Login {
   errorMessage = '';
   loginForm: FormGroup; 
 
-  constructor(private fb: FormBuilder, 
-              private loginService: LoginService, 
-              private snackBar: MatSnackBar, 
-              private router: Router) 
-              {
+  fb = inject(FormBuilder);
+  loginService = inject(LoginService);
+  snackBar = inject(MatSnackBar);
+  router = inject(Router);
+
+  constructor() {
         this.loginForm = this.fb.group({
         login: ['', [Validators.required, Validators.email]],
         senha: ['', [Validators.required, Validators.minLength(6)]]
-      });
-    }
+    });
+  }
 
   onSubmit() {
     console.log('Chamou onsubmit');

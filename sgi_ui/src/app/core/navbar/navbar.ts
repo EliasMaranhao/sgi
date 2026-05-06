@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { LoginService } from '../../auth/login-service';
 
 @Component({
   selector: 'app-navbar',
@@ -24,6 +25,8 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 })
 export class Navbar implements OnInit{
   unidadeAtual: any;
+  loginService = inject(LoginService);
+  router = inject(Router);
 
   menuItens = [
     {
@@ -210,5 +213,7 @@ export class Navbar implements OnInit{
   }
 
   logout(){
+    this.loginService.logout();
+    this.router.navigate(['/login']);
   }
 }
