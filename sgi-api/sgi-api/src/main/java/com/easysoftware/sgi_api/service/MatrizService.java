@@ -3,16 +3,14 @@ package com.easysoftware.sgi_api.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 
 import com.easysoftware.sgi_api.domain.exception.BusinessException;
 import com.easysoftware.sgi_api.dto.FilialResponseDTO;
 import com.easysoftware.sgi_api.dto.MatrizDTO;
 import com.easysoftware.sgi_api.dto.MatrizResponseDTO;
-import com.easysoftware.sgi_api.dto.converters.FilialMapeador;
+import com.easysoftware.sgi_api.dto.converters.FilialMapper;
 import com.easysoftware.sgi_api.dto.converters.MatrizMapper;
-import com.easysoftware.sgi_api.dto.converters.MatrizMapeador;
 import com.easysoftware.sgi_api.entities.Filial;
 import com.easysoftware.sgi_api.entities.Matriz;
 import com.easysoftware.sgi_api.repository.MatrizRepository;
@@ -23,11 +21,13 @@ import jakarta.transaction.Transactional;
 public class MatrizService {
     
     private final MatrizRepository matrizRepository;
-    private final MatrizMapper mapeador;
+    private final MatrizMapper matrizMapper;
+    private final FilialMapper filialMapper;
 
-    public MatrizService(MatrizRepository matrizRepository, MatrizMapper mapeador) {
+    public MatrizService(MatrizRepository matrizRepository, MatrizMapper matrizMapper, FilialMapper filialMapper) {
         this.matrizRepository = matrizRepository;
-        this.mapeador = mapeador;
+        this.matrizMapper = matrizMapper;
+        this.filialMapper = filialMapper;
     }
 
     @Transactional
@@ -44,14 +44,14 @@ public class MatrizService {
     public List<MatrizResponseDTO> buscarMatrizTodas(){
         List<MatrizResponseDTO> dtos = new ArrayList<>();
         for(Matriz matriz : matrizRepository.findAll()){
-            dtos.add(MatrizMapeador.entidadeParaDTO(matriz));
+            dtos.add(matrizMapper.toDto(matriz));
         }
         return dtos;
     }
 
     public MatrizResponseDTO buscarMatrizPeloId(Long id) {
         Matriz matriz = matrizRepository.findById(id).orElseThrow(() -> new BusinessException("Este recurso não fooi localizado"));
-        MatrizResponseDTO dto = MatrizMapeador.entidadeParaDTO(matriz);
+        MatrizResponseDTO dto = matrizMapper.toDto(matriz);
         return dto;
     }
 
@@ -60,7 +60,7 @@ public class MatrizService {
         List<FilialResponseDTO> filiais = new ArrayList<>();
         if(matriz.getFiliais() != null){
             for(Filial filial : matriz.getFiliais()){
-                filiais.add(FilialMapeador.entidadeParaDTO(filial));
+                filiais.add(filialMapper.toDto(filial));
             }
         }
         return filiais;
@@ -69,8 +69,8 @@ public class MatrizService {
     @Transactional
     public MatrizResponseDTO atualizar(Long id, MatrizDTO dto) {
         Matriz matriz = matrizRepository.findById(id).orElseThrow(() -> new BusinessException("Este recurso nao foi localizado!"));
-        mapeador.updateEntityFromDto(dto, matriz);
+        matrizMapper.updateEntityFromDto(dto, matriz);
         matriz = matrizRepository.save(matriz);
-        return mapeador.toDto(matriz);
+        return matrizMapper.toDto(matriz);
     }
 }

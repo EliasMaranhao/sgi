@@ -31,17 +31,9 @@ public class AutenticacaoController {
 
     @PostMapping
     public ResponseEntity<DadosTokenJWT> efetuarLogin(@RequestBody @Valid DadosAutenticacao dados) {
-        System.out.println("CHEGOU AQUI................................");
-        // 1. Cria o objeto de autenticação do Spring
         var authenticationToken = new UsernamePasswordAuthenticationToken(dados.login(), dados.senha());
-        
-        // 2. O Manager chama o seu Service de autenticação e valida a senha
         var authentication = manager.authenticate(authenticationToken);
-
-        // 3. Se passou na validação, gera o token para o usuário logado
         var tokenJWT = tokenService.gerarToken((Usuario) authentication.getPrincipal());
-
-        // 4. Devolve o token dentro do DTO para o Angular
         return ResponseEntity.ok(new DadosTokenJWT(tokenJWT));
     }
 }

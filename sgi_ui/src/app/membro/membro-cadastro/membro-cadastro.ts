@@ -12,6 +12,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ParenteCadastro } from '../parente-cadastro/parente-cadastro';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRadioModule } from '@angular/material/radio';
+import { MembroService } from '../membro-service';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-membro-cadastro',
@@ -26,7 +28,8 @@ import { MatRadioModule } from '@angular/material/radio';
     NgxMaskDirective,
     MatSelectModule,
     MatButtonModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSnackBarModule
   ],
   templateUrl: './membro-cadastro.html',
   styleUrl: './membro-cadastro.scss',
@@ -38,6 +41,8 @@ export class MembroCadastro implements OnInit{
 
   private dialog = inject(MatDialog); // Injeção moderna (inject)
   private fb = inject(FormBuilder);
+  private membroService = inject(MembroService);
+  private snackBar = inject(MatSnackBar);
 
   constructor(){
     this.membroForm = this.fb.group({
@@ -80,7 +85,28 @@ export class MembroCadastro implements OnInit{
   }
 
   salvar(){
-    
+    if(this.membroForm.valid){
+      this.membroService.cadastrarMembro(this.membroForm.value).subscribe({
+        next: response => {
+          this.snackBar.open('Membro cadastrado com sucesso!', 'Fechar', {
+            duration: 3000,           // 3 segundos
+            horizontalPosition: 'end', // Direita
+            verticalPosition: 'top',   // Cima
+            panelClass: ['success-snackbar'] // Classe CSS opcional
+          });
+          this.membroForm.reset;
+        },
+
+        error: erro => {
+          this.snackBar.open('Não foi possivel registrar neste momento, por favor informe ao administrador!', 'Fechar', {
+            duration: 3000,           // 3 segundos
+            horizontalPosition: 'end', // Direita
+            verticalPosition: 'top',   // Cima
+            panelClass: ['error-snackbar'] // Classe CSS opcional
+          });
+        }
+      });
+    }
   }
 
   buscarCep(){
