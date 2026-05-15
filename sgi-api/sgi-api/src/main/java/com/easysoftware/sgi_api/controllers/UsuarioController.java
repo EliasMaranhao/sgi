@@ -16,7 +16,7 @@ import com.easysoftware.sgi_api.service.UsuarioService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/api/usuarios")
 public class UsuarioController {
     
     private final UsuarioService usuarioService;

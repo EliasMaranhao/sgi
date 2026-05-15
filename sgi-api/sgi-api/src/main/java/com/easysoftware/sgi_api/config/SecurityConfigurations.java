@@ -65,7 +65,7 @@ public class SecurityConfigurations {
         
         // Permite todos os Headers (importante para o Authorization do JWT)
         //configuration.setAllowedHeaders(List.of("*"));
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Cache-Control"));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Cache-Control", "X-Tenant-ID"));
         
         // Permite que o navegador envie cookies/autenticação se necessário
         configuration.setAllowCredentials(true);

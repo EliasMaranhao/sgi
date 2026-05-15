@@ -57,6 +57,11 @@ export class Navbar implements OnInit{
           rota: '/', 
           icone: 'dashboard',
           contexto: 'filial'
+        },
+        {
+          label: 'Usuários',
+          rota: '/usuarios',
+          icone: 'person_add'
         }
       ],
 

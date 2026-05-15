@@ -10,6 +10,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { LoginService } from '../login-service';
 import { Router } from '@angular/router';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 @Component({
@@ -23,7 +24,8 @@ import { Router } from '@angular/router';
     MatButtonModule,
     MatIconModule,
     MatSnackBarModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    FlexLayoutModule
 ],
   templateUrl: './login.html',
   styleUrl: './login.scss',
@@ -42,7 +44,8 @@ export class Login {
   constructor() {
         this.loginForm = this.fb.group({
         login: ['', [Validators.required, Validators.email]],
-        senha: ['', [Validators.required, Validators.minLength(6)]]
+        senha: ['', [Validators.required, Validators.minLength(6)]],
+        tenantCode: ['', [Validators.required]]
     });
   }
 
@@ -53,6 +56,7 @@ export class Login {
 
     this.loginService.login(this.loginForm.value).subscribe({
       next: () => {
+        localStorage.setItem('tenant_id', this.loginForm.value.tenantCode);
         this.router.navigate(['/filial'])
       },
       error: () => {

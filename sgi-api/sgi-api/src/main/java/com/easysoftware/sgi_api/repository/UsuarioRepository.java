@@ -14,6 +14,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
      * durante o processo de autenticação (loadUserByUsername).
      * O nome do campo no banco deve ser o que você definiu na @Column(name = "usuario").
      */
-    UserDetails findByLogin(String login);
+    Usuario findByLogin(String login);
     UserDetails findByLoginAndFilialId(String login, Long filialId);
 }

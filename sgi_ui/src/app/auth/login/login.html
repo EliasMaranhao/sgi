@@ -1,54 +1,76 @@
-<div fxLayout="row" fxLayoutAlign="center" class="login-container">
-    <div fxLayout="column" fxFlex="1000px">
-        <mat-card class="login-card">
-            <mat-card-header>
-                <mat-card-title>
-                    Acessar minha conta
-                </mat-card-title>
+<div class="login-container" fxLayout="row" fxLayoutAlign="center center" style="height: 100vh;">
+   
+    <div fxFlex="400px" fxFlex.xs="90%">
+        <mat-card class="login-card" elevation="4">
+
+            <mat-card-header fxLayout="column" fxLayoutAlign="center center">
+                <mat-card-title>Acessar SGI</mat-card-title>
+                <mat-card-subtitle>Informe os dados de acesso</mat-card-subtitle>
             </mat-card-header>
 
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                 <mat-card-content>
-                    <!--Email-->
-                    <mat-form-field appearance="outline" class="full-width">
-                        <mat-label>E-mail</mat-label>
-                        <input matInput type="text" 
-                               formControlName="login" 
-                               name="login"
-                               placeholder="example@email.com"/>
-                        <mat-icon matSuffix>email</mat-icon>
-                        <mat-error>Insira um email válido</mat-error>
-                    </mat-form-field>
+                    <div style="margin-top: 20px;" fxLayout="column" fxLayoutGap="10px">
 
-                    <!--Senha-->
-                    <mat-form-field appearance="outline" class="full-width">
-                        <mat-label>Senha</mat-label>
-                        <input matInput [type]="hide ? 'password' : 'text'"
-                               name="senha" 
-                               formControlName="senha"/>
-                        <button mat-icon-button matSuffix (click)="hide = !hide" type="button">
-                            <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
-                        </button>
-                        <mat-error>Senha é obrigatória (mínimo 8 caracteres)</mat-error>
-                    </mat-form-field>
+                        <!-- Campo de Código do Tenant/Unidade -->
+                        <mat-form-field appearance="outline" class="full-width">
+                            <mat-label>Matriz</mat-label>
+                            <input matInput type="text" formControlName="tenantCode" placeholder="Ex: MATRIZ ou 101" name="tenantCode"/>
+                            <mat-icon matSuffix color="primary">business</mat-icon>
+                            <mat-hint>Identificador da sua unidade</mat-hint>
+                            @if (loginForm.get('tenantCode')?.hasError('required')) {
+                                <mat-error>O código da empresa é obrigatório</mat-error>
+                            }
+                        </mat-form-field>
+
+                        <!-- Campo de E-mail -->
+                        <mat-form-field appearance="outline" class="full-width">
+                            <mat-label>E-mail</mat-label>
+                            <input matInput type="email" formControlName="login" placeholder="exemplo@email.com"/>
+                            <mat-icon matSuffix color="primary">email</mat-icon>
+                            @if (loginForm.get('login')?.hasError('email')) {
+                                <mat-error>
+                                    Insira um e-mail válido
+                                </mat-error>
+                            }
+                           @if (loginForm.get('login')?.hasError('required')) {
+                                <mat-error>
+                                    O e-mail é <strong>obrigatório</strong>
+                                </mat-error>
+                           }
+                        </mat-form-field>
+
+                        <!-- Campo de Senha -->
+                        <mat-form-field appearance="outline" class="full-width">
+                            <mat-label>Senha</mat-label>
+                            <input matInput [type]="hide ? 'password' : 'text'" formControlName="senha"/>
+                            <button mat-icon-button matSuffix (click)="hide = !hide" type="button" tabindex="-1">
+                                <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+                            </button>
+                            <mat-error>Mínimo de 8 caracteres</mat-error>
+                        </mat-form-field>
+
+                        <div fxLayout="row" fxLayoutAlign="end center">
+                            <a mat-button color="accent" style="font-size: 0.8em;">Esqueci minha senha</a>
+                        </div>
+                    </div>
                 </mat-card-content>
 
-                <mat-card-footer>
-                    <a mat-button color="accent">Esqueci minha senha</a>
-                </mat-card-footer>
-
-                <mat-card-actions>
-                    <button mat-raised-button color="primary" class="full-width" type="submit" [disabled]="!loginForm.valid || isLoading">
+                <mat-card-actions fxLayout="column" style="padding: 16px;">
+                    <button mat-raised-button color="primary" class="full-width" type="submit" 
+                            [disabled]="loginForm.invalid || isLoading" 
+                            style="height: 50px;">
                         @if (!isLoading) {
-                            <span>Entrar</span>
-                        }
-                        
-                        @if (isLoading) {
-                            <mat-spinner diameter="20"></mat-spinner>
+                            <span>ENTRAR</span>
+                        } @else {
+                            <mat-spinner diameter="24" strokeWidth="3"></mat-spinner>
                         }
                     </button>
+                    
+                    @if (errorMessage) {
+                        <mat-error class="error-message">{{ errorMessage }}</mat-error>
+                    }
                 </mat-card-actions>
-                @if (errorMessage) { <p style="color: red">{{ errorMessage }}</p> }
             </form>
         </mat-card>
     </div>

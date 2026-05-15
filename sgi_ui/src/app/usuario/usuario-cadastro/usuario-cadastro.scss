@@ -1,0 +1,42 @@
+.cadastro-container {
+  /* Garante que o container ocupe toda a altura da tela */
+  min-height: 100vh;
+  width: 100%;
+  
+  /* Um fundo leve e neutro para destacar o card branco */
+  background-color: #f4f7f6;
+  
+  /* Espaçamento interno para telas pequenas (evita que o card cole nas bordas) */
+  padding: 24px;
+  
+  /* Caso o fxLayout falhe ou você não queira depender dele, 
+     estas 3 linhas abaixo centralizam tudo: */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* Aproveitando para estilizar os campos dentro do container */
+.full-width {
+  width: 100%;
+}
+
+mat-card {
+  /* Um leve arredondamento e sombra suave para um visual moderno */
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+  padding: 16px;
+}
+
+mat-card-title {
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Estilo para o spinner não deformar o botão */
+mat-spinner {
+  display: inline-block;
+  vertical-align: middle;
+}

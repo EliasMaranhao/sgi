@@ -6,6 +6,7 @@ import { MatrizCadastro } from './matriz/matriz-cadastro/matriz-cadastro';
 import { authGuard } from './auth/login-guard';
 import { MatrizConsulta } from './matriz/matriz-consulta/matriz-consulta';
 import { IgrejaConsulta } from './igreja/igreja-consulta/igreja-consulta';
+import { UsuarioCadastro } from './usuario/usuario-cadastro/usuario-cadastro';
 
 export const routes: Routes = [
   {
@@ -46,6 +47,11 @@ export const routes: Routes = [
     path: 'membro/cadastro', 
     component: MembroCadastro, 
     canActivate: [authGuard] // Proteção aplicada aqui!
+  },
+  {
+    path: 'usuarios',
+    component: UsuarioCadastro,
+    canActivate: [authGuard]
   },
   { 
     path: '', 

@@ -6,6 +6,17 @@ import { catchError, throwError } from 'rxjs';
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(LoginService);
   const token = authService.getToken();
+  const tenantId = localStorage.getItem('tenant_id');
+
+  let newHeaders: any = {};
+
+  if (token) {
+      newHeaders['Authorization'] = `Bearer ${token}`;
+  }
+
+  if (tenantId) {
+      newHeaders['X-Tenant-ID'] = tenantId;
+  }
 
   // 1. Validação local antes de enviar a requisição
   if (token && !authService.isLoggedIn(token)) {
@@ -19,9 +30,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   if (token && !req.url.includes('/api/login')) {
     console.log('TOKEN ADICIONADO NA URL ' + req.url);
     requestToForward = req.clone({
-      setHeaders: {
-        Authorization: `Bearer ${token}`
-      }
+      setHeaders: newHeaders
     });
   }
 

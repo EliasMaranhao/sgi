@@ -1,0 +1,76 @@
+<div class="cadastro-container" fxLayout="row" fxLayoutAlign="center center" style="min-height: 100vh; padding: 20px;">
+    <div fxFlex="100%" fxFlex.gt-xs="500px">
+        <mat-card elevation="4">
+            <mat-card-header>
+                <div mat-card-avatar>
+                    <mat-icon color="primary" style="font-size: 40px; height: 40px; width: 40px;">person_add</mat-icon>
+                </div>
+                <mat-card-title>Novo Usuário</mat-card-title>
+                <mat-card-subtitle>Cadastre as credenciais de acesso</mat-card-subtitle>
+            </mat-card-header>
+
+            <form [formGroup]="cadastroForm" (ngSubmit)="onSubmit()">
+                <mat-card-content fxLayout="column" fxLayoutGap="15px" style="margin-top: 20px;">
+                    
+                    <mat-form-field appearance="outline">
+                        <mat-label>E-mail (Login)</mat-label>
+                        <input matInput formControlName="login" placeholder="usuario@empresa.com">
+                        <mat-icon matSuffix>person</mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Senha</mat-label>
+                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="senha">
+                        <button mat-icon-button matSuffix (click)="hide = !hide" type="button" tabindex="-1">
+                            <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+                        </button>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Confirmar Senha</mat-label>
+                        <input matInput [type]="hideConfirm ? 'password' : 'text'" formControlName="confirmaSenha">
+                        <button mat-icon-button matSuffix (click)="hideConfirm = !hideConfirm" type="button" tabindex="-1">
+                            <mat-icon>{{ hideConfirm ? 'visibility_off' : 'visibility' }}</mat-icon>
+                        </button>
+                        @if (cadastroForm.hasError('passwordMismatch') && cadastroForm.get('confirmaSenha')?.touched) {
+                            <mat-error>As senhas não coincidem</mat-error>
+                        }
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Perfil de Acesso (Role)</mat-label>
+                        <mat-select name="role" formControlName="role">
+                            @for (role of roles; track role.value) {
+                                <mat-option [value]="role.value">{{role.viewValue}}</mat-option>
+                            }
+                        </mat-select>
+                        <mat-icon matSuffix>admin_panel_settings</mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Filial / Unidade</mat-label>
+                        <mat-select name="filialId" formControlName="filialId">
+                            @for (f of filiais; track f.id) {
+                                <mat-option [value]="f.id">{{f.nome}}</mat-option>
+                            }
+                        </mat-select>
+                        <mat-icon matSuffix>business</mat-icon>
+                    </mat-form-field>
+
+                </mat-card-content>
+
+                <mat-card-actions fxLayout="column" style="padding: 16px;">
+                    <button mat-raised-button color="primary" type="submit" 
+                            [disabled]="cadastroForm.invalid || isLoading" 
+                            style="height: 50px; width: 100%;">
+                        @if (!isLoading) {
+                            <span>CADASTRAR USUÁRIO</span>
+                        } @else {
+                            <mat-spinner diameter="24"></mat-spinner>
+                        }
+                    </button>
+                </mat-card-actions>
+            </form>
+        </mat-card>
+    </div>
+</div>

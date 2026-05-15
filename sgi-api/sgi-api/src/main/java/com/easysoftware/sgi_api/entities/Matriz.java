@@ -38,4 +38,7 @@ public class Matriz {
 
     @OneToMany(mappedBy = "matriz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Filial> filiais = new ArrayList<>();
+
+     @Column(name = "tenant_id")
+    private String tenantId;
 }
