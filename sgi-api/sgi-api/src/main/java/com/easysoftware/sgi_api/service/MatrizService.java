@@ -23,16 +23,25 @@ public class MatrizService {
     private final MatrizRepository matrizRepository;
     private final MatrizMapper matrizMapper;
     private final FilialMapper filialMapper;
+    private final TenantManagementService tenantManagementService;
 
-    public MatrizService(MatrizRepository matrizRepository, MatrizMapper matrizMapper, FilialMapper filialMapper) {
+    public MatrizService(MatrizRepository matrizRepository, MatrizMapper matrizMapper, FilialMapper filialMapper, TenantManagementService tenantManagementService) {
         this.matrizRepository = matrizRepository;
         this.matrizMapper = matrizMapper;
         this.filialMapper = filialMapper;
+        this.tenantManagementService = tenantManagementService;
     }
 
     @Transactional
     public Matriz salvar(Matriz matriz){
-        return matrizRepository.save(matriz);
+        // Gera o identificador único do schema baseado no nome ou CNPJ
+        String tenantId = "tenant_" + matriz.getTenantId().replaceAll("\\D", "");
+        matriz.setSchemaName(tenantId);
+
+        Matriz salva = matrizRepository.save(matriz);
+        tenantManagementService.createNewTenantSchema(tenantId);
+
+        return salva;
     }
 
     @Transactional

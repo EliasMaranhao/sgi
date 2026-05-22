@@ -1,13 +1,14 @@
-package com.easysoftware.sgi_api.tenant;
+package com.easysoftware.sgi_api.config.tenant;
 
 public class TenantContext {
+
     private static final ThreadLocal<String> CURRENT_TENANT = new ThreadLocal<>();
 
-    public static void setTenantId(String tenantId) {
+    public static void setCurrentTenant(String tenantId) {
         CURRENT_TENANT.set(tenantId);
     }
 
-    public static String getTenantId() {
+    public static String getCurrentTenant() {
         return CURRENT_TENANT.get();
     }
 

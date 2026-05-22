@@ -1,38 +1,33 @@
-// package com.easysoftware.sgi_api.config;
+package com.easysoftware.sgi_api.config;
 
-// import java.util.Arrays;
-// import java.util.List;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-// import org.springframework.context.annotation.Bean;
-// import org.springframework.context.annotation.Configuration;
-// import org.springframework.web.cors.CorsConfiguration;
-// import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-// import org.springframework.web.filter.CorsFilter;
+import com.easysoftware.sgi_api.config.tenant.TenantInterceptor;
 
-// @Configuration
-// public class WebConfig {
+@Configuration
+public class WebConfig implements WebMvcConfigurer{
 
-//     @Bean
-//     public CorsFilter corsFilter() {
-//         CorsConfiguration config = new CorsConfiguration();
-//         config.setAllowedOrigins(List.of("http://localhost:4200"));
-//         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
-//         config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept"));
-//         config.setAllowCredentials(true);
-//         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//         source.registerCorsConfiguration("/**", config);
-//         return new CorsFilter(source);
-//     }
+private final TenantInterceptor tenantInterceptor;
 
-//     @Bean
-//     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//         http
-//             .cors(cors -> cors.configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())) 
-//             // O comando acima diz ao Spring Security para usar a config de CORS que criamos
-//             .csrf(csrf -> csrf.disable()) // Geralmente desativado para APIs REST (Stateless)
-//             .authorizeHttpRequests(auth -> auth
-//                 .anyRequest().authenticated()
-//             );
-//         return http.build();
-//     }
-// }
+    public WebConfig(TenantInterceptor tenantInterceptor) {
+        this.tenantInterceptor = tenantInterceptor;
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(tenantInterceptor)
+                // Aplica o interceptor para todas as rotas da sua API de negócio
+                .addPathPatterns("/api/**", "/**") 
+                
+                // Exclui rotas públicas e ferramentas de documentação para ganho de performance
+                .excludePathPatterns(
+                    "/swagger-ui/**",
+                    "/v3/api-docs/**",
+                    "/swagger-resources/**",
+                    "/actuator/**",
+                    "/favicon.ico"
+                );
+    }
+}

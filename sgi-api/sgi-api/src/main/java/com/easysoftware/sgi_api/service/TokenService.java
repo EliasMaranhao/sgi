@@ -1,8 +1,7 @@
 package com.easysoftware.sgi_api.service;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 @Service
 public class TokenService{
     
-@Value("${api.security.token.secret}")
+    @Value("${api.security.token.secret}")
     private String secret;
 
     private static final String ISSUER = "API Gestao Igreja";
@@ -24,11 +23,15 @@ public class TokenService{
     public String gerarToken(Usuario usuario) {
         try {
             Algorithm algoritmo = Algorithm.HMAC256(secret);
+            
+            // Tratamento preventivo para lazy loading de relacionamentos na criação do token
+            Long igrejaId = (usuario.getFilial() != null) ? usuario.getFilial().getId() : null;
+
             return JWT.create()
                 .withIssuer(ISSUER)
                 .withSubject(usuario.getLogin())
                 .withClaim("id", usuario.getId())
-                .withClaim("igrejaId", usuario.getFilial().getId()) // Informação crucial para as filiais
+                .withClaim("igrejaId", igrejaId)
                 .withClaim("role", usuario.getRole().name())
                 .withExpiresAt(dataExpiracao())
                 .sign(algoritmo);
@@ -46,13 +49,12 @@ public class TokenService{
                 .verify(tokenJWT)
                 .getSubject();
         } catch (JWTVerificationException exception) {
-            // Se o token estiver expirado ou for inválido, cai aqui
-            throw new RuntimeException("Token JWT inválido ou expirado!");
+            throw new RuntimeException("Token JWT inválido ou expirado.");
         }
     }
 
     private Instant dataExpiracao() {
-        // Define expiração para 2 horas a partir de agora, no fuso de Brasília (-03:00)
-        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
+        // Gera expiração robusta de 2 horas independente do fuso horário da máquina hospedada
+        return Instant.now().plus(2, ChronoUnit.HOURS);
     }
 }
